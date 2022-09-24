@@ -3,7 +3,7 @@ package test;
 import java.util.*;
 import dependencies.DSALinkedList;
 
-public abstract class DSALinkedListIteratorTestHarness implements Iterable
+public abstract class DSALinkedListIteratorTestHarness implements Iterable<Object>
 {
     public static void main(String[] args)
     {
