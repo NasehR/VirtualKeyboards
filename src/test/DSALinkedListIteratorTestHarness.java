@@ -1,7 +1,7 @@
 package test;
 
 import java.util.*;
-import main.dependency.DSALinkedList;
+import dependencies.DSALinkedList;
 
 public abstract class DSALinkedListIteratorTestHarness implements Iterable
 {

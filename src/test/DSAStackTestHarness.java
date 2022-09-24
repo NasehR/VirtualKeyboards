@@ -1,7 +1,7 @@
 package test;
 
 import java.util.*;
-import main.dependency.DSAStack;
+import dependencies.DSAStack;
 
 public class DSAStackTestHarness 
 {

@@ -9,7 +9,7 @@
 package test;
 
 import java.io.*;
-import main.dependency.DSALinkedList;
+import dependencies.DSALinkedList;
 
 public class DSALinkedListTestHarness
 {

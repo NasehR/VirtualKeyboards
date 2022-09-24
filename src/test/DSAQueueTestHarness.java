@@ -1,7 +1,7 @@
 package test;
 
 import java.util.*;
-import main.dependency.DSAQueue;
+import dependencies.DSAQueue;
 
 public class DSAQueueTestHarness 
 {
