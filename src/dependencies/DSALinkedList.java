@@ -1,4 +1,14 @@
-package dependencies;
+/*
+ * Filename: DSALinkedList.java
+ * Purpose: Contains the DSALinkedList class
+ *
+ * @author   : Naseh Rizvi
+ * StudentNo : 20167671
+ * Unit      : DSA
+ * Date      : 25/09/22
+ */
+
+ package dependencies;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,14 @@
-package dependencies;
+/*
+ * Filename: DSAStack.java
+ * Purpose: Contains the DSAStack class
+ *
+ * @author   : Naseh Rizvi
+ * StudentNo : 20167671
+ * Unit      : DSA
+ * Date      : 25/09/22
+ */
+
+ package dependencies;
 
 import java.util.*;
 
