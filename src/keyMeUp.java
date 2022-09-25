@@ -132,6 +132,11 @@ public class keyMeUp
                 System.out.println("Invalid option, the only option is -s");
             }
         }
+        
+        else
+        {
+            System.out.println("Invalid number of arguments");
+        }
     }
 
     private static void interactiveMode()
