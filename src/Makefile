@@ -16,3 +16,4 @@ classes: $(CLASSES:.java=.class)
 
 clean:
 		$(RM) *.class
+		$(RM) dependencies/*.class
