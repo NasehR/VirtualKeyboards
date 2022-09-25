@@ -3,7 +3,7 @@ package test;
 import java.util.*;
 import dependencies.DSAStack;
 
-public class DSAStackTestHarness 
+public class UnitTestStack 
 {
     public static void main(String[] args)
     {

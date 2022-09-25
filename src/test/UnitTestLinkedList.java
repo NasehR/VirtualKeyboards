@@ -11,7 +11,7 @@ package test;
 import java.io.*;
 import dependencies.DSALinkedList;
 
-public class DSALinkedListTestHarness
+public class UnitTestLinkedList
 {
 	public static void main(String args[])
 	{

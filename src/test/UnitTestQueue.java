@@ -3,7 +3,7 @@ package test;
 import java.util.*;
 import dependencies.DSAQueue;
 
-public class DSAQueueTestHarness 
+public class UnitTestQueue 
 {
     public static void main(String[] args)
     {

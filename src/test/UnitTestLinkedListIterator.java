@@ -1,9 +1,19 @@
-package test;
+/*
+ * Filename: .java
+ * Purpose: 
+ *
+ * @author   : Naseh Rizvi
+ * StudentNo : 20167671
+ * Unit      : DSA
+ * Date      : 25/09/22
+ */
+
+ package test;
 
 import java.util.*;
 import dependencies.DSALinkedList;
 
-public abstract class DSALinkedListIteratorTestHarness implements Iterable<Object>
+public abstract class UnitTestLinkedListIterator implements Iterable<Object>
 {
     public static void main(String[] args)
     {
