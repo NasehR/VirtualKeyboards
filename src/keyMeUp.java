@@ -5,7 +5,7 @@
  * @author   : Naseh Rizvi
  * StudentNo : 20167671
  * Unit      : DSA
- * Date      : 25/09/22
+ * Date      : 08/10/22
  */
 
 import java.io.*;
@@ -20,10 +20,10 @@ public class keyMeUp
         {
             if(args[0].equals("-i"))
             {
+                DSAGraph<String> graph = new DSAGraph<>();
                 do
                 {
                     interactiveMode();
-
                     int input = UserInputs.userInput(1, 9);
 
                     try
@@ -31,7 +31,11 @@ public class keyMeUp
                         switch(input)
                         {
                             case 1:
+                                String fileName;
                                 System.out.println("Load keyboard file");
+                                System.out.print("Name of the keyboard file: ");
+                                fileName = UserInputs.userInput();
+                                graph = FileIO.fileToGraph(fileName);
                                 break;
 
                             case 2:
@@ -44,10 +48,15 @@ public class keyMeUp
 
                             case 4:
                                 System.out.println("Display graph");
+                                graph.displayAsList();
                                 break;
 
                             case 5:
                                 System.out.println("Display graph information");
+                                System.out.print("The number of Vertices = ");
+                                System.out.println(graph.getVertexCount());
+                                System.out.print("The number of Edges = ");
+                                System.out.println(graph.getEdgeCount()); 
                                 break;
 
                             case 6:
@@ -68,20 +77,20 @@ public class keyMeUp
                         }
                     }
 
-                    // catch(FileNotFoundException ex)
-                    // {
-                    //     System.out.println("Unable to find file");
-                    //     System.out.println("Enter a filename: ");
-                    // }
-        
-                    // catch(IOException e)
-                    // {
-                    //     System.out.println(e.getMessage());
-                    // }
-                    
-                    catch(IllegalArgumentException e)
+                    catch(FileNotFoundException e)
                     {
-                        System.out.println(e.getMessage());
+                        System.out.println("Unable to find file");
+                        System.out.println("Enter a valid filename: ");
+                    }
+
+                    catch(IOException e3)
+                    {
+                        System.out.println(e3.getMessage());
+                    }
+
+                    catch(IllegalArgumentException e2)
+                    {
+                        System.out.println(e2.getMessage());
                     }
                 }while(true);
             }
@@ -102,12 +111,18 @@ public class keyMeUp
                 try 
                 {
                     String keyFile, strFile, pathFile;
+                    DSAGraph<String> graph = new DSAGraph<>();
                     keyFile = args[1];
                     strFile = args[2];
                     pathFile = args[3];
                     System.out.println("keyFile: " + keyFile);
                     System.out.println("strFile: " + strFile);
                     System.out.println("pathFile: " + pathFile);
+
+                    graph = FileIO.fileToGraph(keyFile);
+                    graph.displayAsList();
+                    
+                    FileIO.readFile(strFile);
                 }
 
                 catch(IllegalArgumentException e)
@@ -115,16 +130,16 @@ public class keyMeUp
                     System.out.println(e.getMessage());
                 }
 
-                // catch(FileNotFoundException ex)
-                // {
-                //     System.out.println("Unable to find file");
-                //     System.out.println("Enter a filename: ");
-                // }
+                catch(FileNotFoundException e2)
+                {
+                    System.out.println("Unable to find file");
+                    System.out.println("Enter a filename: ");
+                }
     
-                // catch(IOException e)
-                // {
-                //     System.out.println(e.getMessage());
-                // }
+                catch(IOException e3)
+                {
+                    System.out.println(e3.getMessage());
+                }
             }
 
             else
