@@ -9,7 +9,7 @@
  * Practical : 04
  */
 
- package dependencies;
+package dependencies;
 
 import java.util.*;
 
@@ -30,25 +30,49 @@ public class DSAStack<T>
         return stack.iterator();
     }
 
-    //Getter Capacity:
+    /*
+     * Gets the length of the queue.
+     * 
+     * @param: void.
+     * 
+     * @return: int.
+     */
     public int getCount()
     {
         return (stack.getCount());
     }
 
-    //Getter isEmpty:
+    /*
+     * Checks if the stack is empty.
+     * 
+     * @param: void.
+     * 
+     * @return: boolean.
+     */
     public boolean isEmpty()
     {
         return (stack.isEmpty());
     }
 
-    //Setter push:
-    public void push(T value) throws IllegalStateException
+    /*
+     * Push the value into the stack.
+     * 
+     * @param: value.
+     * 
+     * @return: void.
+     */
+    public void push(T value)
     {
         stack.insertLast(value);
     }
 
-    //Setter pop:
+    /*
+     * Pops the value out of the stack.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */
     public T pop() throws IllegalStateException
     {
         if(isEmpty())
@@ -59,7 +83,13 @@ public class DSAStack<T>
         return stack.removeLast();
     }
 
-    //Setter top:
+    /*
+     * Gives the last value in the stack.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */
     public T top() throws IllegalStateException
     {
         if(isEmpty())

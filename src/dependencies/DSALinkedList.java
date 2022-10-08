@@ -9,7 +9,7 @@
  * Practical : 04
  */
 
- package dependencies;
+package dependencies;
 
 import java.io.*;
 import java.util.*;
@@ -98,7 +98,13 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         return new DSALinkedListIterator(this);
     }
 
-    //Setter insertFirst:
+    /*
+     * Inserts the given value to the front of the linked list.
+     * 
+     * @param: Value to insert.
+     * 
+     * @return: void.
+     */
     public void insertFirst(T newValue)
     {
         DSAListNode newNode = new DSAListNode(newValue);
@@ -119,7 +125,13 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         counter++;
     }
 
-    //Setter insertLast:
+    /*
+     * Inserts the given value to the end of the linked list.
+     * 
+     * @param: Value to insert.
+     * 
+     * @return: void.
+     */
     public void insertLast(T newValue)
     {
         DSAListNode newNode = new DSAListNode(newValue) ;
@@ -142,7 +154,13 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         counter++;
     }
 
-    //Setter removeFirst:
+    /*
+     * Remove the value at the front of the linked list.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */
     public T removeFirst() throws NoSuchElementException
     {    
         T data;
@@ -172,7 +190,13 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         return data;
     }
 
-    //Setter removeLast:
+    /*
+     * Removes the value at the end of the linked list.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */
     public T removeLast() throws NoSuchElementException
     {
         T data;
@@ -202,19 +226,37 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         return data;
     }
 
-    //Getter isEmpty:
+    /*
+     * Checks if the linked list is empty.
+     * 
+     * @param: void.
+     * 
+     * @return: boolean.
+     */
     public boolean isEmpty()
     {
         return ((head == null) && (tail == null));
     }
 
-    //Getter getcounter:
+    /*
+     * Gets the length of the linked list.
+     * 
+     * @param: void.
+     * 
+     * @return: int.
+     */
     public int getCount()
     {
         return counter;
     }
 
-    //Getter peekFirst:
+    /*
+     * Shows the fisrt value in the linked list.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */
     public T peekFirst()
     {
         if(isEmpty())
@@ -225,7 +267,13 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         return (head.data);
     }
 
-    //Getter peekLast:
+    /*
+     * Shows the last value in the linked list.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */
     public T peekLast()
     {
         if(isEmpty())
@@ -236,6 +284,13 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         return (tail.data);
     }
 
+    /*
+     * Displays the linked list.
+     * 
+     * @param: void.
+     * 
+     * @return: void.
+     */
     public void display()
     {
         DSAListNode tmp;

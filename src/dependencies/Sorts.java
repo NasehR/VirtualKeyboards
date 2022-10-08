@@ -9,9 +9,16 @@
  * Practical : 01
  */
 
-public class Sorts
+public class Sorts<T>
 {
-    public void bubbleSort(DSAQueue<DSAGraph.DSAGraphVertex> A)
+    /*
+     * Sorts a queue by their fCosts using bubble sort
+     * 
+     * @param A: The queue to be sorted
+     * 
+     * @return: void.
+     */
+    public void bubbleSort(DSAQueue<T> A)
     {
         Double temp;
         int pass = 0;
@@ -23,7 +30,7 @@ public class Sorts
 
             for(int i = 0; i < (A.length - 1 - pass); i++)
             {
-                if(A[i].getFCost() > A[i+1].getFCost())
+                if(getVertex(A[i]).compareTo(getVertex(A[i+1])) == 1)
                 {
                     temp = A[i];
                     A[i] = A[i+1];
@@ -36,7 +43,14 @@ public class Sorts
         }
     }
 
-    public void selectionSort(DSAQueue A)
+    /*
+     * Sorts a queue by their fCosts using selection sort
+     * 
+     * @param A: The queue to be sorted
+     * 
+     * @return: void.
+     */
+    public void selectionSort(DSAQueue<T> A)
     {
         Double temp;
 
@@ -46,7 +60,7 @@ public class Sorts
 
             for(int j = i + 1; j < A.length; j++)
             {
-                if(A[j].getFCost() < A[min].getFCost())
+                if(getVertex(A[i]).compareTo(getVertex(A[i+1])) == 1)
                 {
                     min = j;
                 }
@@ -58,14 +72,21 @@ public class Sorts
         }
     }
 
-    public void insertionSort(DSAQueue A)
+    /* 
+     * Sorts a queue by their fCosts using insertion sort
+     * 
+     * @param A: The queue to be sorted
+     * 
+     * @return: void.
+     */
+    public void insertionSort(DSAQueue<T> A)
     {
         Double temp;
 
         for(int i = 1; i < A.length; i++)
         {
             j = i;
-            while(int j > 0 && A[j].getFCost() < A[j-1].getFCost())
+            while(int j > 0 && (getVertex(A[i]).compareTo(getVertex(A[i+1])) == 1))
             {
                 temp = A[j].getFCost();
                 A[j].getFCost() = A[j-1].getFCost();

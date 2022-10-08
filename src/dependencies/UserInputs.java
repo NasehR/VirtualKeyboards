@@ -16,42 +16,14 @@ import java.io.*;
 
 public class UserInputs
 {
-    public static int userInputInt(int min, int max)
-    {
-        int value = min - 1;
-        Scanner scan = new Scanner(System.in);
-
-        while(!(value >= min && value <= max))
-        {
-            try
-            {
-                value = scan.nextInt();
-
-                if(!(value >= min && value <= max))
-                {
-                    throw new IllegalArgumentException();
-                }
-            }
-            
-            catch(InputMismatchException e)
-            {
-                System.out.println("Invalid input, must be an integer.\n");
-            }
-
-            catch(IllegalArgumentException ex)
-            {
-                System.out.println("int");
-                System.out.println("Invalid input, must be in bounds. Between " + String.valueOf(min) + " and " + String.valueOf(max) + "\n");
-            }
-            
-            // Clears the buffer
-            scan.nextLine();
-
-        }
-        
-        return value;
-    }
-
+    /*
+     * Check if the users input is between the min and the max.
+     * 
+     * @param A: min     
+     * @param B: max
+     * 
+     * @return: int.
+     */
     public static int userInput(int min, int max)
     {
         int value = min - 1;
@@ -88,6 +60,14 @@ public class UserInputs
         return value;
     }
     
+    /*
+     * Check if the users input is between the min and the max.
+     * 
+     * @param A: min     
+     * @param B: max
+     * 
+     * @return: double.
+     */
     public static double userInput(double min, double max)
     {
         double value = min - 1;
@@ -124,6 +104,14 @@ public class UserInputs
         return value;
     }
     
+    /*
+     * Check if the users input is between the min and the max.
+     * 
+     * @param A: min     
+     * @param B: max
+     * 
+     * @return: long.
+     */
     public static long userInput(long min, long max)
     {
         long value = min - 1;
@@ -160,6 +148,14 @@ public class UserInputs
         return value;
     }
 
+    /*
+     * Check if the users input is between the min and the max.
+     * 
+     * @param A: min     
+     * @param B: max
+     * 
+     * @return: float.
+     */
     public static float userInput(float min, float max)
     {
         float value = min - 1;
@@ -196,6 +192,14 @@ public class UserInputs
         return value;
     }
 
+    /*
+     * Check if the users input is between the min and the max.
+     * 
+     * @param A: min     
+     * @param B: max
+     * 
+     * @return: char.
+     */
     public static char userInput(char min, char max)
     {
         String buffer;
@@ -237,6 +241,13 @@ public class UserInputs
         return value;
     }
 
+    /*
+     * Converts user input to string.
+     * 
+     * @param: void
+     * 
+     * @return: String.
+     */
     public static String userInput()
     {
         String string = null;

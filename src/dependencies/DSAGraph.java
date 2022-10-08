@@ -1,5 +1,5 @@
 /*
- * Filename: DSALinkedList.java
+ * Filename: DSAGraph.java
  * Purpose: Contains the DSALinkedList class
  *
  * @author   : Naseh Rizvi
@@ -9,29 +9,28 @@
  * Practical : 06
  */
 
- package dependencies;
+package dependencies;
 
 import java.util.*;
 
-public class DSAGraph<L, V>
+public class DSAGraph<L>
 {
-    public class DSAGraphVertex
+    private class DSAGraphVertex implements Comparable<Double>
     {
         // Class Fields:
         private L label;
-        private Double fCost;
+        private Double distance;
         private DSALinkedList<DSAGraphVertex> links;
         private boolean visited;
-        private double gCost = Double.POSITIVE_INFINITY;
-		private double hCost = Double.POSITIVE_INFINITY; 
 		private DSAGraphVertex previousVertex;
 
         // Constructor:
         public DSAGraphVertex(L inLabel)
         {
             label = inLabel;
-            fCost = Double.POSITIVE_INFINITY;
+            distance = Double.POSITIVE_INFINITY;
             links = new DSALinkedList<>();
+            previousVertex = null;
         }
        
         // Accessor getLabel:
@@ -40,10 +39,10 @@ public class DSAGraph<L, V>
             return label;
         }
 
-        // Accessor getFCost:
-        public Double getFCost()
+        // Accessor getDistance:
+        public Double getDistance()
         {
-            return fCost;
+            return distance;
         }
         
         // Accessor getAdjacent:
@@ -75,49 +74,45 @@ public class DSAGraph<L, V>
         {
             return visited;
         }
-        
-        public double getGCost()
+
+		public void setDistance(double newDistance)
 		{
-			return gCost;
+			distance = newDistance;
 		}
 
-		public double getHCost()
-		{
-			return hCost;
-		}
+        public void setPreviousVertex(DSAGraphVertex vertex)
+        {
+            previousVertex = vertex;
+        }
 
-		public void setFCost(double hCost, double gCost)
-		{
-			fCost = hCost + gCost;
-		}
-
-		public void setGCost(double cost)
-		{
-			gCost = cost;
-		}
-		
-		public void setHCost(double cost)
-		{
-			hCost = cost;
-		}
+        public DSAGraphVertex getPreviousVertex()
+        {
+            return previousVertex;
+        }
 
         // Accessor toString:
         public String toString()
         {
             return label.toString();
         }
+
+        @Override
+        public int compareTo(Double other)
+        {
+            return distance.compareTo(other);
+        }
     }
 
-    public class DSAGraphEdge
+    private class DSAGraphEdge
     {
         // Class Fields:
         private DSAGraphVertex from;
         private DSAGraphVertex to;
         private L label;
-        private V value;
+        private Double value;
 
         // Constructor:
-        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, L inLabel, V inValue)
+        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, L inLabel, Double inValue)
         {
             from = fromVertex;
             to = toVertex;
@@ -131,6 +126,7 @@ public class DSAGraph<L, V>
             from = fromVertex;
             to = toVertex;
             label = inLabel;
+            value = 1.0;
         }
 
         // Accessor getLabel:
@@ -140,7 +136,7 @@ public class DSAGraph<L, V>
         }
 
         // Accessor getValue:
-        public V getValue()
+        public Double getValue()
         {
             return value;
         }
@@ -189,7 +185,7 @@ public class DSAGraph<L, V>
      * 
      * @return: void.
      */
-    public void addVertex(L label, V value)
+    public void addVertex(L label, Double value)
     {
         if(hasVertex(label))
         {
@@ -230,7 +226,7 @@ public class DSAGraph<L, V>
      * @throws: IllegalArgumentException if the edge already exist.
      */
     @SuppressWarnings("unchecked")
-    public void addEdge(L fromLabel, L toLabel,/* L edgeLabel,*/ V edgeValue) throws IllegalArgumentException
+    public void addEdge(L fromLabel, L toLabel, Double edgeValue) throws IllegalArgumentException
     {
         if(hasEdge(fromLabel, toLabel))
         {
@@ -259,7 +255,7 @@ public class DSAGraph<L, V>
      * @throws: IllegalArgumentException if the edge already exist.
      */
     @SuppressWarnings("unchecked")
-    public void addEdge(L fromLabel, L toLabel/*, L edgeLabel,*/) throws IllegalArgumentException
+    public void addEdge(L fromLabel, L toLabel) throws IllegalArgumentException
     {
         if(hasEdge(fromLabel, toLabel))
         {
@@ -491,11 +487,23 @@ public class DSAGraph<L, V>
     {
         System.out.print("\n");
 
-        for(DSAGraphEdge e : edges)
+        for(DSAGraphVertex v : vertices)
         {
-            System.out.print(e.getLabel() + ": ");
-            System.out.print(e.getFrom().toString() + " -> " + e.getTo().toString());
-            System.out.println();
+            int i = 1;
+            System.out.print(v.getLabel() + " -> [");
+
+            for(DSAGraphVertex v2 : v.getAdjacent())
+            {
+                System.out.print(v2.getLabel());
+                
+                if(i < (v.getAdjacent()).getCount())
+                {
+                    System.out.print(", ");
+                    i++;
+                }
+            }
+
+            System.out.println("]");
         }
     }
 
@@ -539,7 +547,7 @@ public class DSAGraph<L, V>
      * 
      * @param: void.
      * 
-     * @return: void.
+     * @return: DSAQueue<DSAGraphVertex>.
      */
     public DSAQueue<DSAGraphVertex> BFS()
     {
@@ -580,7 +588,7 @@ public class DSAGraph<L, V>
      * 
      * @param: void.
      * 
-     * @return: void.
+     * @return: DSAQueue<DSAGraphVertex>.
      */
     public DSAQueue<DSAGraphVertex> DFS()
     {

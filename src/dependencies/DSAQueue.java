@@ -9,7 +9,7 @@
  * Practical : 04
  */
 
- package dependencies;
+package dependencies;
 
 import java.util.*;
 
@@ -17,13 +17,11 @@ public class DSAQueue<T> implements Iterable<T>
 {
     //Class fields
     private DSALinkedList<T> queue;
-    private int capacity;
 
     //Constructor
     public DSAQueue()
     {
         queue  = new DSALinkedList<T>();
-        capacity = 100;
     }
 
     //Alternate Constructor
@@ -44,36 +42,49 @@ public class DSAQueue<T> implements Iterable<T>
         return queue.iterator();
     }
     
-    //Getter Capacity:
+    /*
+     * Gets the length of the queue.
+     * 
+     * @param: void.
+     * 
+     * @return: int.
+     */
     public int getCount()
     {
         return (queue.getCount());
     }
 
-    //Getter isEmpty:
+    /*
+     * Checks if the queue is empty.
+     * 
+     * @param: void.
+     * 
+     * @return: boolean.
+     */
     public boolean isEmpty()
     {
         return (queue.isEmpty());
     }
 
-    //Getter isFull:
-    public boolean isFull()
+    /*
+     * Enqueues the value to the queue.
+     * 
+     * @param: value.
+     * 
+     * @return: void.
+     */
+    public void enqueue(T value)
     {
-        return (queue.getCount() == capacity);
-    }
-
-    //Setter enqueue:
-    public void enqueue(T value) throws IllegalStateException
-    {
-        if(isFull())
-        {
-            throw new IllegalStateException("The queue is full.");
-        }
-
         queue.insertLast(value);
     }
 
-    //Setter dequeue:
+    /*
+     * Dequeues the value from the queue.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */    
     public T dequeue() throws NoSuchElementException
     {
         if(isEmpty())
@@ -84,7 +95,13 @@ public class DSAQueue<T> implements Iterable<T>
         return (queue.removeFirst());
     }
 
-    //Getter peek:
+    /*
+     * Gets the value at the start of the queue.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */
     public T peek() throws NoSuchElementException
     {
         if(isEmpty())
