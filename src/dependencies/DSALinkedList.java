@@ -36,6 +36,31 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
             this.next = null;
             this.prev = null;
         }
+
+        public T getData()
+        {
+            return data;
+        }
+
+        public DSAListNode getNext()
+        {
+            return next;
+        }
+
+        public void setNext(DSAListNode next)
+        {
+            this.next = next;
+        }
+
+        public DSAListNode getPrev()
+        {
+            return prev;
+        }
+
+        public void setPrev(DSAListNode prev)
+        {
+            this.prev = prev;
+        }
     }
 
     // Linked List Iterator:
@@ -70,9 +95,9 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
 
             else
             {
-                value = nextNode.data;
+                value = nextNode.getData();
                 current = nextNode;
-                nextNode = nextNode.next;
+                nextNode = nextNode.getNext();
             }
 
             return value;
@@ -188,6 +213,84 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         counter--;
 
         return data;
+    }
+
+    /*
+     * Removes the value in the middle of the linked list.
+     * 
+     * @param: void.
+     * 
+     * @return: T.
+     */
+    public T removeMiddle(T nodeData) throws NoSuchElementException
+    {
+        T tempData;
+        boolean exit, found;
+        DSAListNode currentNode, prevNode, nextNode;
+
+        if(isEmpty())
+        {
+            throw new NoSuchElementException("List is empty");
+        }
+
+        else
+        {
+            exit = false;
+            found = false;
+            currentNode = head;
+            tempData = currentNode.getData();
+
+            while(!exit)
+            {
+                if(currentNode.getData().equals(nodeData))
+                {
+                    found = true;
+                    exit = true;
+                }
+
+                else if(currentNode.getNext().equals(null))
+                {
+                    exit = true;
+                }
+
+                else
+                {
+                    currentNode = currentNode.getNext();
+                }
+            }
+
+            if(found)
+            {
+                tempData = currentNode.getData();
+
+                if(currentNode.equals(head))
+                {
+                    removeFirst();
+                }
+
+                else if(currentNode.equals(tail))
+                {
+                    removeLast();
+                }
+
+                else
+                {
+                    nextNode = currentNode.getNext();
+                    prevNode = currentNode.getPrev();
+                    prevNode.setNext(nextNode);
+                    nextNode.setPrev(prevNode);
+                }
+
+                counter--;
+            }
+
+            else
+            {
+                throw new NoSuchElementException("Node not found");
+            }
+        }
+
+        return tempData;
     }
 
     /*
