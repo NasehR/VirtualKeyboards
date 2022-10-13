@@ -7,13 +7,14 @@ public class modes
     public static void interactiveMenu()
     {
         DSAGraph graph = new DSAGraph();
+        DSALinkedList<String> OP = new DSALinkedList<>();
         DSAQueue<String> word = new DSAQueue<>();
         DSAQueue<String> path = new DSAQueue<>();
         DSAQueue<Double> distance = new DSAQueue<>();
         String fileName, vertex, fromVertex, toVertex, startVertex, endVertex;
         String string = "";
         char[] arr = new char[1];
-        int optionNode, optionEdge, optionFile, input;
+        int optionNode, optionEdge, optionFile, optionSave, input;
 
         do
         {
@@ -188,22 +189,52 @@ public class modes
 
                     case 8:
                         System.out.println("Displaying path...");
+                        
+                        System.out.println(
+                            "\nOptions: \n\t" +
+                            "(1) Save the paths (output.csv)\n\t" +
+                            "(0) Do not save\n\t"
+                            );
 
                         int length = word.getCount();
-                        
-                        for(int i = 0; i < (length + 1); i++)
-                        {
-                            System.out.println(length);
-                            startVertex = word.dequeue();
-                            endVertex = word.peek();
-                            System.out.print("Start: " + startVertex + " End: " + endVertex +"\n");
-                            graph.Dijkstras(startVertex, endVertex);
-                            System.out.println();
-                            graph.displayFinal();
-                        }
-                        
-                        // AN OPTION TO SAVE
+                        optionSave = UserInputs.userInput(0, 1);
 
+                        switch(optionSave)
+                        {
+                            case 1:
+                                double cost, currentCost;
+                                cost = 0;
+
+                                for(int i = 0; i < (length + 1); i++)
+                                {
+                                    System.out.println(length);
+                                    startVertex = word.dequeue();
+                                    endVertex = word.peek();
+                                    System.out.print("Start: " + startVertex + " End: " + endVertex +"\n");
+                                    graph.Dijkstras(startVertex, endVertex);
+                                    System.out.println();
+                                    graph.displayFinal();
+                                    OP = graph.getOverallPath();
+                                    currentCost =  (double) (graph.getOverallPath().getCount() - 1);
+                                    cost = cost + currentCost;
+                                    FileIO.writeCSV("output.csv", startVertex, endVertex, OP, cost);
+                                }
+                                break;
+                            
+                            case 0:
+                                for(int i = 0; i < (length + 1); i++)
+                                {
+                                    System.out.println(length);
+                                    startVertex = word.dequeue();
+                                    endVertex = word.peek();
+                                    System.out.print("Start: " + startVertex + " End: " + endVertex +"\n");
+                                    graph.Dijkstras(startVertex, endVertex);
+                                    System.out.println();
+                                    graph.displayFinal();
+                                }
+                                break;
+                        }
+                        // AN OPTION TO SAVE
                         break;
 
                     case 9:
@@ -252,7 +283,7 @@ public class modes
             System.out.println("pathFile: " + pathFile);
 
             graph = FileIO.fileToGraph(keyFile);
-            graph.displayAsList();
+            // graph.displayAsList();
             
             FileIO.readFile(strFile);
         }

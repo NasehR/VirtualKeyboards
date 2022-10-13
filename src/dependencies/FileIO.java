@@ -14,6 +14,8 @@ package dependencies;
 import java.io.*;
 import java.util.*;
 
+import dependencies.DSAGraph.DijkstrasStacks;
+
 public class FileIO
 {
     /*
@@ -204,10 +206,10 @@ public class FileIO
     {
         char[] arr = string.toCharArray();
 
-        for(int i = 0; i < string.length(); i++)
-        {
-            System.out.println(arr[i]);
-        }
+        // for(int i = 0; i < string.length(); i++)
+        // {
+        //     System.out.println(arr[i]);
+        // }
 
         return arr;
     }  
@@ -259,5 +261,56 @@ public class FileIO
         }
 
         return graph;
+    }
+
+    /*
+     * Writes a csv file containing the shortest path and the overall cost.
+     * 
+     * @param filename: file where the output is stored.
+     * @param startVertex: label of the starting vertex.
+     * @param endVertex: label of the ending vertex.
+     * @param overallPath: Linkedlist of all vertices in the path.
+     * @param cost: cost of the path.
+     */
+    public static void writeCSV(String filename, String startVertex, String endVertex, DSALinkedList<String> overallPath, double cost) throws FileNotFoundException
+    {
+        BufferedWriter bw = null;
+        FileWriter fileWriter = null;
+
+        try
+        {
+            fileWriter = new FileWriter(filename, true);
+            bw = new BufferedWriter(fileWriter);
+
+            bw.write("SHORTEST PATH FROM " + startVertex + " TO " + endVertex + ":" + "\r\n");
+            int c = overallPath.getCount();
+
+            
+            for(int i = 0; i < c; i++)
+            {
+                bw.write(overallPath.removeFirst());
+
+                if(i < (c - 1))
+                {
+                    bw.write("->");
+                }
+            }
+
+            bw.write("\nDistance: " + (c - 1) + "\n");
+            bw.write("\nOverall Distance: " + cost + "\n\n");
+
+            bw.close();
+            
+        }
+
+        catch(FileNotFoundException e)
+        {
+            throw new FileNotFoundException("Error writing to file " + filename);
+        }
+
+        catch (IOException e) 
+        {
+            System.out.println("exception occurred" + e);
+        }
     }
 }

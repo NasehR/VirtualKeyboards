@@ -171,32 +171,37 @@ public class DSAGraph implements Serializable
         }
     } 
     
-    private class DijkstrasStacks
+    public class DijkstrasStacks
     {
         private DSAStack<String> finalStack;
         private DSAStack<Double> distanceStack;
 
+        // Constructor:
         public DijkstrasStacks()
         {
             finalStack = new DSAStack<>();
             distanceStack = new DSAStack<>();
         }
 
+        // Mutator setFinalStack:
         public void setFinalStack(DSAStack<String> finalStack)
         {
             this.finalStack = finalStack;
         }
 
+        // Accessor getFinalStack:
         public DSAStack<String> getFinalStack()
         {
             return finalStack;
         }
 
+        // Mutator setDistanceStack:
         public void setDistanceStack(DSAStack<Double> distanceStack)
         {
             this.distanceStack = distanceStack;
         }
         
+        // Accessor getDistanceStack:
         public DSAStack<Double> getDistanceStack()
         {
             return distanceStack;
@@ -206,6 +211,7 @@ public class DSAGraph implements Serializable
     //Class Fields:
     private DSALinkedList<DSAGraphVertex> vertices;
     private DSALinkedList<DSAGraphEdge> edges;
+    private DSALinkedList<String> overallPath;
     private DijkstrasStacks dijkstras;
 
     //Constructor:
@@ -213,6 +219,7 @@ public class DSAGraph implements Serializable
     {
         vertices = new DSALinkedList<>();
         edges = new DSALinkedList<>();
+        overallPath = new DSALinkedList<>();
         dijkstras = null;
     }
 
@@ -527,6 +534,18 @@ public class DSAGraph implements Serializable
     }
 
     /*
+     * Returns the overall path.
+     * 
+     * @param: void.
+     * 
+     * @return: DASLinkedList<String>.
+     */
+    public DSALinkedList<String> getOverallPath()
+    {
+        return this.overallPath;
+    } 
+
+    /*
      * Gets the adjacent vertices of a vertex with the given label.
      * 
      * @param label: The label of the vertex.
@@ -811,6 +830,7 @@ public class DSAGraph implements Serializable
                 System.out.println("end = " + vertex.getLabel());
                 finalStack.push(vertex.getLabel());
                 distanceStack.push(vertex.getDistance());
+                overallPath.insertFirst(vertex.getLabel());
                 vertex = vertex.getPreviousVertex();
     
                 
@@ -819,17 +839,17 @@ public class DSAGraph implements Serializable
                     System.out.println("next = " + vertex.getLabel());
                     finalStack.push(vertex.getLabel());
                     distanceStack.push(vertex.getDistance());
+                    overallPath.insertFirst(vertex.getLabel());
                     vertex = vertex.getPreviousVertex();
                 }
     
                 System.out.println("start = " + startVertex.getLabel());
                 finalStack.push(startVertex.getLabel());
                 distanceStack.push(startVertex.getDistance());
+                overallPath.insertFirst(vertex.getLabel());
     
                 dijkstras.setDistanceStack(distanceStack);
                 dijkstras.setFinalStack(finalStack);
-
-                System.out.println("getFinalStack length " + dijkstras.getFinalStack().getCount());
             }
 
             else if(endVertex.equals(startVertex))
@@ -839,8 +859,6 @@ public class DSAGraph implements Serializable
 
                 dijkstras.setDistanceStack(distanceStack);
                 dijkstras.setFinalStack(finalStack);
-                
-                System.out.println("getFinalStack length " + dijkstras.getFinalStack().getCount());
             }
 
         } 
@@ -900,7 +918,7 @@ public class DSAGraph implements Serializable
                 while(!(priorityQueue.isEmpty()))
                 {
                     DSAGraphVertex u = priorityQueue.dequeue();
-                    
+
                     if(!(u.equals(endVertex)))
                     {
                         for(DSAGraphVertex v : u.getAdjacent())
