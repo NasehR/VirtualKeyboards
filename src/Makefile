@@ -9,6 +9,7 @@ JC = javac
 
 CLASSES = \
 			keyMeUp.java \
+			modes.java \
 
 default: classes
 
