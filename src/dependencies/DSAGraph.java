@@ -12,29 +12,29 @@
 package dependencies;
 
 import java.util.*;
+import java.io.*;
 
-public class DSAGraph<L>
+public class DSAGraph implements Serializable
 {
-    private class DSAGraphVertex implements Comparable<Double>
+    private class DSAGraphVertex implements Comparable<Double>, Serializable
     {
         // Class Fields:
-        private L label;
-        private Double distance;
+        private String label;
+        private Double distance = null;
         private DSALinkedList<DSAGraphVertex> links;
         private boolean visited;
 		private DSAGraphVertex previousVertex;
 
         // Constructor:
-        public DSAGraphVertex(L inLabel)
+        public DSAGraphVertex(String inLabel)
         {
             label = inLabel;
-            distance = Double.POSITIVE_INFINITY;
             links = new DSALinkedList<>();
             previousVertex = null;
         }
        
         // Accessor getLabel:
-        public L getLabel()
+        public String getLabel()
         {
             return label;
         }
@@ -96,6 +96,11 @@ public class DSAGraph<L>
             return label.toString();
         }
 
+        public void removeAdjacent(DSAGraphVertex vertexLabel)
+        {
+            links.removeMiddle(vertexLabel);
+        }
+
         @Override
         public int compareTo(Double other)
         {
@@ -103,16 +108,16 @@ public class DSAGraph<L>
         }
     }
 
-    private class DSAGraphEdge
+    private class DSAGraphEdge implements Serializable
     {
         // Class Fields:
         private DSAGraphVertex from;
         private DSAGraphVertex to;
-        private L label;
+        private String label;
         private Double value;
 
         // Constructor:
-        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, L inLabel, Double inValue)
+        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, String inLabel, Double inValue)
         {
             from = fromVertex;
             to = toVertex;
@@ -121,7 +126,7 @@ public class DSAGraph<L>
         }
 
         // Alternative Constructor:
-        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, L inLabel)
+        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, String inLabel)
         {
             from = fromVertex;
             to = toVertex;
@@ -130,7 +135,7 @@ public class DSAGraph<L>
         }
 
         // Accessor getLabel:
-        public L getLabel()
+        public String getLabel()
         {
             return label;
         }
@@ -166,15 +171,49 @@ public class DSAGraph<L>
         }
     } 
     
+    private class DijkstrasQueues
+    {
+        private DSAQueue<String> finalQueue;
+        private DSAQueue<Double> distanceQueue;
+
+        public DijkstrasQueues()
+        {
+            finalQueue = new DSAQueue<>();
+            distanceQueue = new DSAQueue<>();
+        }
+
+        public void setFinalQueue(DSAQueue<String> finalQueue)
+        {
+            this.finalQueue = finalQueue;
+        }
+
+        public DSAQueue<String> getFinalQueue()
+        {
+            return finalQueue;
+        }
+
+        public void setDistanceQueue(DSAQueue<Double> distanceQueue)
+        {
+            this.distanceQueue = distanceQueue;
+        }
+        
+        public DSAQueue<Double> getDistanceQueue()
+        {
+            return distanceQueue;
+        }
+    }
+
     //Class Fields:
     private DSALinkedList<DSAGraphVertex> vertices;
     private DSALinkedList<DSAGraphEdge> edges;
+    private DijkstrasQueues dijkstras;
 
     //Constructor:
     public DSAGraph()
     {
         vertices = new DSALinkedList<>();
         edges = new DSALinkedList<>();
+        dijkstras = null;
     }
 
     /*
@@ -184,8 +223,10 @@ public class DSAGraph<L>
      * @param value: The value of the vertex to be added.
      * 
      * @return: void.
+     * 
+     * @IllegalArgumentException: Vertex already exists.
      */
-    public void addVertex(L label, Double value)
+    public void addVertex(String label, Double value) throws IllegalArgumentException
     {
         if(hasVertex(label))
         {
@@ -202,16 +243,58 @@ public class DSAGraph<L>
      * @param label: The label of the vertex to be added.
      * 
      * @return: void.
+     *
+      * @IllegalArgumentException: Vertex already exists.
      */
-    public void addVertex(L label)
+    public void addVertex(String label) throws IllegalArgumentException
     {
         if(hasVertex(label))
         {
             throw new IllegalArgumentException("Vertex " + label + " already exists");
         }
         
-        DSAGraphVertex vertex = new DSAGraphVertex(label);
-        vertices.insertLast(vertex);
+        else if(!(hasVertex(label)))
+        {
+            DSAGraphVertex vertex = new DSAGraphVertex(label);
+            vertices.insertLast(vertex);
+        }
+    }
+
+    /*
+     * Removes a vertex with label from the graph.
+     * 
+     * @param label: The label of the vertex to be removed.
+     * 
+     * @return: void.
+     *
+     * @IllegalArgumentException: Vertex does not exists.
+     */
+    public void removeVertex(String label) throws IllegalArgumentException
+    {
+        if(!(hasVertex(label)))
+        {
+            throw new IllegalArgumentException("Vertex " + label + " does not exists");
+        }
+        
+        else if(hasVertex(label))
+        {
+            DSAGraphVertex vertex = getVertex(label);
+            
+            for(DSAGraphEdge e : edges)
+            {
+                if(e.getFrom().equals(vertex) || e.getTo().equals(vertex))
+                {
+                    edges.removeMiddle(e);
+                }
+
+                if(e.getTo().equals(vertex))
+                {
+                    e.getFrom().removeAdjacent(vertex);
+                }
+            }
+
+            vertices.removeMiddle(vertex);
+        }
     }
 
     /*
@@ -223,19 +306,18 @@ public class DSAGraph<L>
      * 
      * @return: void.
      * 
-     * @throws: IllegalArgumentException if the edge already exist.
+     * @IllegalArgumentException: Edge already exists.
      */
-    @SuppressWarnings("unchecked")
-    public void addEdge(L fromLabel, L toLabel, Double edgeValue) throws IllegalArgumentException
+    public void addEdge(String fromLabel, String toLabel, Double edgeValue) throws IllegalArgumentException
     {
         if(hasEdge(fromLabel, toLabel))
         {
-            throw new IllegalArgumentException("Edge from" + fromLabel + "to " + toLabel + " already exists");
+            throw new IllegalArgumentException("Edge from " + fromLabel + " to " + toLabel + " already exists");
         }
 
         else if(!(hasEdge(fromLabel, toLabel)))
         {
-            L edgeLabel = (L) (fromLabel + "-" + toLabel);
+            String edgeLabel = fromLabel + "-" + toLabel;
             DSAGraphVertex origin = getVertex(fromLabel);
             DSAGraphVertex destination = getVertex(toLabel);
             DSAGraphEdge edge = new DSAGraphEdge(origin, destination, edgeLabel, edgeValue);
@@ -252,19 +334,18 @@ public class DSAGraph<L>
      * 
      * @return: void.
      * 
-     * @throws: IllegalArgumentException if the edge already exist.
+     * @IllegalArgumentException: Edge already exists.
      */
-    @SuppressWarnings("unchecked")
-    public void addEdge(L fromLabel, L toLabel) throws IllegalArgumentException
+    public void addEdge(String fromLabel, String toLabel) throws IllegalArgumentException
     {
         if(hasEdge(fromLabel, toLabel))
         {
-            throw new IllegalArgumentException("Edge from" + fromLabel + "to " + toLabel + " already exists");
+            throw new IllegalArgumentException("Edge from " + fromLabel + " to " + toLabel + " already exists");
         }
 
         else if(!(hasEdge(fromLabel, toLabel)))
         {
-            L edgeLabel = (L) (fromLabel + "-" + toLabel);
+            String edgeLabel = fromLabel + "-" + toLabel;
             DSAGraphVertex origin = getVertex(fromLabel);
             DSAGraphVertex destination = getVertex(toLabel);
             DSAGraphEdge edge = new DSAGraphEdge(origin, destination, edgeLabel);
@@ -274,13 +355,41 @@ public class DSAGraph<L>
     }
 
     /*
+     * Removes an edge from the graph
+     * 
+     * @param fromLabel: The label of the origin vertex.
+     * @param toLabel: The label of the destination vertex.
+     * 
+     * return: void.
+     * 
+     * @IllegalArgumentException: Edge does not exists.
+     */
+    public void removeEdge(String fromLabel, String toLabel) throws IllegalArgumentException
+    {
+        if(!(hasEdge(fromLabel, toLabel)))
+        {
+            throw new IllegalArgumentException("Edge from " + fromLabel + " to " + toLabel + " does not exists");
+        }
+
+        else if(hasEdge(fromLabel, toLabel))
+        {
+            String edgeLabel = fromLabel + "-" + toLabel;
+            System.out.println("Deleting edge: " + edgeLabel);
+            edges.removeMiddle(getEdge(edgeLabel));
+            getVertex(fromLabel).removeAdjacent(getVertex(toLabel));
+        }
+
+        // return edges;
+    }
+
+    /*
      * Checks if a vertex with the given label exists in the graph.
      * 
      * @param label: The label of the vertex to be checked.
      * 
      * @return: boolean.
      */
-    public boolean hasVertex(L label)
+    public boolean hasVertex(String label)
     {
         boolean condition = false;
 
@@ -303,13 +412,15 @@ public class DSAGraph<L>
      * 
      * @return: boolean.
      */
-    public boolean hasEdge(L fromLabel, L toLabel)
+    public boolean hasEdge(String fromLabel, String toLabel)
     {
         boolean condition = false;
+        DSAGraphVertex origin = getVertex(fromLabel);
+        DSAGraphVertex destination = getVertex(toLabel);
 
         for(DSAGraphEdge e : edges)
         {
-            if((e.getTo().equals(toLabel)) && (e.getFrom().equals(fromLabel)))
+            if((e.getTo().equals(destination)) && (e.getFrom().equals(origin)))
             {
                 condition = true;
             }
@@ -341,7 +452,7 @@ public class DSAGraph<L>
     {
         return edges.getCount();
     }
-
+ 
     /*
      * Gets the vertex with the given label.
      * 
@@ -349,7 +460,7 @@ public class DSAGraph<L>
      * 
      * @return: DSAGraphVertex.
      */
-    public DSAGraphVertex getVertex(L label) 
+    public DSAGraphVertex getVertex(String label) 
     {
         DSAGraphVertex vertex = null;
         
@@ -376,7 +487,7 @@ public class DSAGraph<L>
      * 
      * @return: DSAGraphEdge.
      */
-    public DSAGraphEdge getEdge(L label)
+    public DSAGraphEdge getEdge(String label)
     {
         DSAGraphEdge edge = null;
 
@@ -392,13 +503,29 @@ public class DSAGraph<L>
     }
 
     /*
+     * 
+     */
+    public DijkstrasQueues getDijkstrasQueues()
+    {
+        return this.dijkstras;
+    }
+    
+    /*
+     * 
+     */
+    public void setDijkstrasQueues(DijkstrasQueues dijkstrasQueues)
+    {
+        this.dijkstras = dijkstrasQueues;
+    }
+
+    /*
      * Gets the adjacent vertices of a vertex with the given label.
      * 
      * @param label: The label of the vertex.
      * 
      * @return: DSALinkedList<DSAGraphVertex>.
      */
-    public DSALinkedList<DSAGraphVertex> getAdjacentVertex(L label) 
+    public DSALinkedList<DSAGraphVertex> getAdjacentVertex(String label) 
     {
         DSAGraphVertex vertex = getVertex(label);
         return vertex.getAdjacent();
@@ -412,7 +539,7 @@ public class DSAGraph<L>
      * 
      * @return: boolean.
      */
-    public boolean isAdjacent(L label1, L label2) 
+    public boolean isAdjacent(String label1, String label2) 
     {
         boolean adjacent = false;
         DSAGraphVertex vertex1 = getVertex(label1);
@@ -485,18 +612,19 @@ public class DSAGraph<L>
      */
     public void displayAsList()
     {
-        System.out.print("\n");
+        System.out.print("Displaying graph...\n");
 
         for(DSAGraphVertex v : vertices)
         {
-            int i = 1;
-            System.out.print(v.getLabel() + " -> [");
+            int i = 0;
+            int count = v.getAdjacent().getCount() - 1;
+            System.out.print(v.getLabel() + "\t-> [");
 
             for(DSAGraphVertex v2 : v.getAdjacent())
             {
                 System.out.print(v2.getLabel());
                 
-                if(i < (v.getAdjacent()).getCount())
+                if(i < (count))
                 {
                     System.out.print(", ");
                     i++;
@@ -540,6 +668,24 @@ public class DSAGraph<L>
                 }
             }
         }
+    }
+
+    /*
+     * Displays the graphs info.
+     * 
+     * @param: void.
+     * 
+     * @return: void.
+     */
+    public void displayInfo()
+    {
+        System.out.println("Displaying graph information...");
+        System.out.print("The number of Vertices = \t");
+        System.out.println(getVertexCount());
+        System.out.print("The number of Edges = \t");
+        System.out.println(getEdgeCount()); 
+        System.out.print("The number of Edges per Vertex = \t");
+        System.out.println((float) (getEdgeCount())/(getVertexCount()));
     }
 
     /*
@@ -632,5 +778,192 @@ public class DSAGraph<L>
 
         
         return visited;
+    }
+
+    /*
+     * Traverses through the queue to find the origin.
+     * 
+     * @param: startVertex.
+     * @param: endVertex.
+     * 
+     * @return: DSAQueue<DSAGraphVertex>.
+     */
+    private void tracking(DSAGraphVertex startVertex, DSAGraphVertex endVertex)
+    {
+        try 
+        {
+            this.dijkstras = new DijkstrasQueues();
+            DSAQueue<String> finalQueue = new DSAQueue<>();
+            DSAQueue<Double> distanceQueue = new DSAQueue<>();
+            DSAGraphVertex vertex;
+            
+            vertex = endVertex;
+            System.out.println("end = " + vertex.getLabel());
+            finalQueue.enqueue(vertex.getLabel());
+            distanceQueue.enqueue(vertex.getDistance());
+            vertex = vertex.getPreviousVertex();
+
+            
+            do
+            {
+                System.out.println("next = " + vertex.getLabel());
+                finalQueue.enqueue(vertex.getLabel());
+                distanceQueue.enqueue(vertex.getDistance());
+                vertex = vertex.getPreviousVertex();
+            }while(!(vertex.equals(startVertex)));
+
+            System.out.println("start = " + startVertex.getLabel());
+            finalQueue.enqueue(startVertex.getLabel());
+            distanceQueue.enqueue(startVertex.getDistance());
+
+            dijkstras.setDistanceQueue(distanceQueue);
+            dijkstras.setFinalQueue(finalQueue);
+
+            System.out.println("getFinalQueue length " + dijkstras.getFinalQueue().getCount());
+        } 
+
+        catch(NullPointerException e) 
+        {
+            System.out.println("vertex is null.");
+        }
+    }
+
+    /*
+     * Performs a Dijkstra’s Algorithm on the graph.
+     * 
+     * @param: label of the start vertex.
+     * @param2: label of the end vertex.
+     * 
+     * @return: void.
+     *
+     * @NoSuchElementException: Element does not exist.
+     */
+    public void Dijkstras(String startLabel, String endLabel) throws NoSuchElementException
+    {
+        DSAGraphVertex startVertex, endVertex;
+        DSAQueue<DSAGraphVertex> priorityQueue = new DSAQueue<>();
+        DSAQueue<String> finalQueue = new DSAQueue<>();
+        String label;
+
+        try
+        {
+            startVertex = getVertex(startLabel);
+            endVertex = getVertex(endLabel);
+    
+            if(!(startVertex.equals(endVertex)))
+            {
+                for(DSAGraphVertex v : vertices)
+                {
+                    if(v.equals(startVertex))
+                    {
+                        v.setDistance(0);
+                        v.setPreviousVertex(null);
+                    }
+        
+                    else
+                    {
+                        v.setDistance(Double.POSITIVE_INFINITY);
+                        v.setPreviousVertex(null);
+                    }
+                }
+        
+                for(DSAGraphVertex v : startVertex.getAdjacent())
+                {
+                    String edgeLabel = (startVertex.getLabel() + "-" + v.getLabel());
+                    v.setDistance(startVertex.getDistance() + getEdge(edgeLabel).getValue());
+                    v.setPreviousVertex(startVertex);
+                    priorityQueue.enqueue(v);
+                }
+    
+                while(!(priorityQueue.isEmpty()))
+                {
+                    DSAGraphVertex u = priorityQueue.dequeue();
+        
+                    // if(u.equals(endVertex))
+                    // {
+                    //     label = u.getLabel();
+                    //     finalQueue.enqueue(label);
+                    //     distanceQueue.enqueue(u.getDistance());
+                    // }
+                    
+                    if(!(u.equals(endVertex)))
+                    {
+                        for(DSAGraphVertex v : u.getAdjacent())
+                        {
+                            DSAGraphEdge edge = getEdge(u.getLabel() + "-" + v.getLabel());
+                            Double tempDistance = u.getDistance() + edge.getValue();
+                            
+                            if(tempDistance < v.getDistance())
+                            {
+                                v.setPreviousVertex(u);
+                                v.setDistance(tempDistance);
+                                priorityQueue.enqueue(v);
+                            }
+                        }
+                    }
+                }
+
+                tracking(startVertex, endVertex);
+            }
+            
+        }
+
+        catch (NoSuchElementException e)
+        {
+            System.out.println("No such element exists.");    
+        }
+    }
+
+    /*
+     * Displays the Dijkstra's queue and the distance.
+     * 
+     * @param: void.
+     * 
+     * @return: void.
+     * 
+     * @NullPointerException: dijkstras is null.
+     */
+    public void displayFinal() throws NullPointerException
+    {
+        if(this.dijkstras == null)
+        {
+            throw new NullPointerException();
+        }
+
+        else
+        {
+            DSAQueue<String> FQ = dijkstras.getFinalQueue();
+            DSAQueue<Double> DQ = dijkstras.getDistanceQueue();
+            int FQCount, DQCount;
+            FQCount = FQ.getCount();
+            DQCount = DQ.getCount();
+    
+            System.out.println("PATH:\n\t");
+            
+            for(int i = 0; i < FQCount; i++)
+            {
+                System.out.print(FQ.dequeue());
+
+                if(!(FQ.isEmpty()))
+                {
+                    System.out.print("->");
+                }
+            }
+
+            System.out.println("\tEND");
+            System.out.println("\nDISTANCE:\t" + DQ.peek());
+
+            for(int i = 0; i < DQCount; i++)
+            {
+                System.out.print(DQ.dequeue());
+
+                if(!(DQ.isEmpty()))
+                {
+                    System.out.print("->");
+                }
+            }
+
+            System.out.println("\tEND");
+        } 
     }
 }

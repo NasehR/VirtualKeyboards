@@ -22,11 +22,13 @@ public class FileIO
      * @param: fileName.
      * 
      * @return: DSAGraph<String>.
+     * 
+     * @FileNotFoundException: File could not be found.
      */
-    public static DSAGraph<String> fileToGraph(String fileName) throws FileNotFoundException
+    public static DSAGraph fileToGraph(String fileName) throws FileNotFoundException
     {
         String line;
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         try
         {
@@ -59,7 +61,7 @@ public class FileIO
      * 
      * @return: void.
      */
-    private static void lineToGraph(String line, DSAGraph<String> graph) 
+    private static void lineToGraph(String line, DSAGraph graph) 
     {
         String[] lineElements = line.split(" ");
             
@@ -87,11 +89,57 @@ public class FileIO
     }   
 
     /*
+     * Saves the graph to a file Serialized.
+     * 
+     * @param: DSAGraph<String>.
+     * @param: fileName.
+     * 
+     * @return: void.
+     * 
+     * @IOException: Could not write file.
+     */
+    public static void graphToFile(String fileName, DSAGraph graph) throws IOException
+    {
+        FileOutputStream fileStream = null;
+        ObjectOutputStream objStream = null;
+
+        try
+        {
+            fileStream = new FileOutputStream(fileName);
+            objStream = new ObjectOutputStream(fileStream);
+            objStream.writeObject(graph);
+            objStream.close();
+            System.out.println("Serializing...");
+            System.out.println("Serialization complete.");
+        }
+
+        catch(IOException e)
+        {
+            if(fileStream != null)
+            {
+                try
+                {
+                    fileStream.close();
+                }
+				
+                catch(IOException e2)
+                {
+                    throw new IOException(e2.getMessage());
+                }
+            }
+
+            throw new IOException(e.getMessage());
+        }
+    }
+
+    /*
      * Reads a file and splits the string into character array.
      * 
      * @param: fileName.
      * 
      * @return: void.
+     * 
+     * @IOException: Could not read file.
      */
     public static void readFile(String fileName) throws IOException
     {
@@ -163,4 +211,53 @@ public class FileIO
 
         return arr;
     }  
+
+    /*
+     * Loads a graph from a serialized file.
+     * 
+     * @param: fileName.
+     * 
+     * @return: DSAGraph<String>.
+     * 
+     * @IOException: Incorrect input.
+     */
+    public static DSAGraph load(String fileName) throws IOException
+    {
+        FileInputStream fileStream = null;
+        ObjectInputStream objStream = null;
+        DSAGraph graph = new DSAGraph();
+        
+        try
+        {        
+            fileStream = new FileInputStream(fileName);
+            objStream = new ObjectInputStream(fileStream);
+            graph = (DSAGraph) objStream.readObject();
+            objStream.close();
+            System.out.println("Deserialization complete.");
+        }
+
+        catch(ClassNotFoundException e)
+        {
+            System.out.println("Class DSALinkedList not found" + e.getMessage());
+        }
+
+        catch(IOException e)
+        {
+            if(fileStream != null)
+            {
+                try
+                {
+                    fileStream.close();
+                }
+                catch(IOException e2)
+                {
+                    throw new IOException(e2.getMessage());
+                }
+            }
+
+            throw new IOException(e.getMessage());        
+        }
+
+        return graph;
+    }
 }
