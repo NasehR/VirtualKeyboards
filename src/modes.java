@@ -7,7 +7,7 @@ public class modes
     public static void interactiveMenu()
     {
         DSAGraph graph = new DSAGraph();
-        DSAQueue<String> userInput = new DSAQueue<>();
+        DSAQueue<String> word = new DSAQueue<>();
         DSAQueue<String> path = new DSAQueue<>();
         DSAQueue<Double> distance = new DSAQueue<>();
         String fileName, vertex, fromVertex, toVertex, startVertex, endVertex;
@@ -176,13 +176,12 @@ public class modes
 
                     case 7:
                         System.out.println("Generating path...");
-                        // System.out.println(string.length());
 
                         for(int i = 0; i < arr.length; i++)
                         {
                             if(graph.hasVertex(Character.toString(arr[i])))
                             {
-                                userInput.enqueue(Character.toString(arr[i]));
+                                word.enqueue(Character.toString(arr[i]));
                             }
                         }
                         break;
@@ -190,21 +189,20 @@ public class modes
                     case 8:
                         System.out.println("Displaying path...");
 
-                        int length = userInput.getCount();
+                        int length = word.getCount();
                         
-                        for(int i = 0; i < (length); i++)
+                        for(int i = 0; i < (length + 1); i++)
                         {
-                            startVertex = userInput.dequeue();
-                            endVertex = userInput.peek();
+                            System.out.println(length);
+                            startVertex = word.dequeue();
+                            endVertex = word.peek();
                             System.out.print("Start: " + startVertex + " End: " + endVertex +"\n");
                             graph.Dijkstras(startVertex, endVertex);
                             System.out.println();
                             graph.displayFinal();
-                            length = userInput.getCount();
                         }
                         
-                        // NEED TO DISPLAY Dijkstra HERE
-                        // PLUS AN OPTION TO SAVE
+                        // AN OPTION TO SAVE
 
                         break;
 
@@ -235,6 +233,11 @@ public class modes
             catch(NullPointerException e4)
             {
                 System.out.println(e4.getMessage());
+            }
+
+            catch(NoSuchElementException e5)
+            {
+                System.out.println();
             }
         }while(input != 0);
     }
