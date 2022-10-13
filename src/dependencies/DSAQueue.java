@@ -24,18 +24,6 @@ public class DSAQueue<T> implements Iterable<T>
         queue  = new DSALinkedList<T>();
     }
 
-    //Alternate Constructor
-    public DSAQueue(int capacity) throws IllegalArgumentException
-    {
-        if(capacity < 1)
-        {
-            throw new IllegalArgumentException("Capacity must be greater than 1");
-        }
-
-        queue = new DSALinkedList<T>();
-        this.capacity = capacity;
-    }
-
     //Getter Iterator:
     public Iterator<T> iterator()
     {
@@ -84,6 +72,8 @@ public class DSAQueue<T> implements Iterable<T>
      * @param: void.
      * 
      * @return: T.
+     *
+     * @NoSuchElementException: Queue is empty.
      */    
     public T dequeue() throws NoSuchElementException
     {
@@ -101,6 +91,8 @@ public class DSAQueue<T> implements Iterable<T>
      * @param: void.
      * 
      * @return: T.
+     * 
+     * @NoSuchElementException: Queue is empty.
      */
     public T peek() throws NoSuchElementException
     {

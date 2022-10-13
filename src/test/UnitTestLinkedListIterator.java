@@ -1,14 +1,15 @@
 /*
- * Filename: .java
+ * Filename: UnitTestLinkedListIterator.java
  * Purpose: 
  *
  * @author   : Naseh Rizvi
  * StudentNo : 20167671
  * Unit      : DSA
  * Date      : 25/09/22
+ * Practical : 06
  */
 
- package test;
+package test;
 
 import java.util.*;
 import dependencies.DSALinkedList;

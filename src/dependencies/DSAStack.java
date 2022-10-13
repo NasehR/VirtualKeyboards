@@ -72,6 +72,8 @@ public class DSAStack<T>
      * @param: void.
      * 
      * @return: T.
+     * 
+     * @IllegalStateException: stack is empty.
      */
     public T pop() throws IllegalStateException
     {
@@ -89,6 +91,8 @@ public class DSAStack<T>
      * @param: void.
      * 
      * @return: T.
+     * 
+     * @IllegalStateException: Stack is empty.
      */
     public T top() throws IllegalStateException
     {

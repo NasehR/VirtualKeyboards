@@ -185,6 +185,8 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
      * @param: void.
      * 
      * @return: T.
+     *
+     * @NoSuchElementException: Linkedlist is empty.
      */
     public T removeFirst() throws NoSuchElementException
     {    
@@ -221,6 +223,8 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
      * @param: void.
      * 
      * @return: T.
+     *
+     * @NoSuchElementException: Linkedlist is empty.
      */
     public T removeMiddle(T nodeData) throws NoSuchElementException
     {
@@ -299,6 +303,8 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
      * @param: void.
      * 
      * @return: T.
+     * 
+     * @NoSuchElementException: Linkedlist is empty.
      */
     public T removeLast() throws NoSuchElementException
     {

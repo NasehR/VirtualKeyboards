@@ -1,3 +1,14 @@
+/*
+ * Filename: UnitTestQueue.java
+ * Purpose: 
+ *
+ * @author   : Naseh Rizvi
+ * StudentNo : 20167671
+ * Unit      : DSA
+ * Date      : 04/10/22
+ * Practical : 06
+ */
+
 package test;
 
 import java.util.*;
@@ -10,7 +21,6 @@ public class UnitTestQueue
         System.out.println("\nTesting DSAQueue...");
 
         testDefault();
-        testAlternate();
         testGetCount();
         testIsEmpty();
         testIsFull();
@@ -29,26 +39,6 @@ public class UnitTestQueue
         assert queue.isEmpty() : "The queue should be empty";
         
         System.out.println("\tpassed.");
-    }
-
-    public static void testAlternate()
-    {
-        System.out.print("\tTesting Alternate Constructor: ");
-        
-        DSAQueue<Object> queue = new DSAQueue<>(2);
-
-        assert queue.getCount() == 0 : "The count should be 0";
-        assert queue.isEmpty() : "The queue should be empty";
-
-        try
-        {
-            DSAQueue<Object> newQueue = new DSAQueue<>(-5);
-        }
-
-        catch(IllegalArgumentException ex)
-        {
-            System.out.println("\tpassed.");
-        }
     }
 
     public static void testGetCount()
@@ -214,7 +204,6 @@ public class UnitTestQueue
             System.out.println("\t\tpassed.");
         }
     }
-
     
     public static void testPeek()
     {
@@ -247,5 +236,4 @@ public class UnitTestQueue
             System.out.println("\t\t\tpassed.");
         }
     }
-    
 }

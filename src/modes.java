@@ -185,6 +185,10 @@ public class modes
                                 userInput.enqueue(Character.toString(arr[i]));
                             }
                         }
+                        break;
+
+                    case 8:
+                        System.out.println("Displaying path...");
 
                         int length = userInput.getCount();
                         
@@ -195,14 +199,9 @@ public class modes
                             System.out.print("Start: " + startVertex + " End: " + endVertex +"\n");
                             graph.Dijkstras(startVertex, endVertex);
                             System.out.println();
+                            graph.displayFinal();
                             length = userInput.getCount();
                         }
-                        break;
-
-                    case 8:
-                        System.out.println("Displaying path...");
-                        
-                        graph.displayFinal();
                         
                         // NEED TO DISPLAY Dijkstra HERE
                         // PLUS AN OPTION TO SAVE
