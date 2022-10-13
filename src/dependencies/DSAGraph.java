@@ -173,33 +173,33 @@ public class DSAGraph implements Serializable
     
     private class DijkstrasQueues
     {
-        private DSAQueue<String> finalQueue;
-        private DSAQueue<Double> distanceQueue;
+        private DSAStack<String> finalStack;
+        private DSAStack<Double> distanceStack;
 
         public DijkstrasQueues()
         {
-            finalQueue = new DSAQueue<>();
-            distanceQueue = new DSAQueue<>();
+            finalStack = new DSAStack<>();
+            distanceStack = new DSAStack<>();
         }
 
-        public void setFinalQueue(DSAQueue<String> finalQueue)
+        public void setFinalStack(DSAStack<String> finalStack)
         {
-            this.finalQueue = finalQueue;
+            this.finalStack = finalStack;
         }
 
-        public DSAQueue<String> getFinalQueue()
+        public DSAStack<String> getFinalStack()
         {
-            return finalQueue;
+            return finalStack;
         }
 
-        public void setDistanceQueue(DSAQueue<Double> distanceQueue)
+        public void setDistanceStack(DSAStack<Double> distanceStack)
         {
-            this.distanceQueue = distanceQueue;
+            this.distanceStack = distanceStack;
         }
         
-        public DSAQueue<Double> getDistanceQueue()
+        public DSAStack<Double> getDistanceStack()
         {
-            return distanceQueue;
+            return distanceStack;
         }
     }
 
@@ -793,33 +793,33 @@ public class DSAGraph implements Serializable
         try 
         {
             this.dijkstras = new DijkstrasQueues();
-            DSAQueue<String> finalQueue = new DSAQueue<>();
-            DSAQueue<Double> distanceQueue = new DSAQueue<>();
+            DSAStack<String> finalStack = new DSAStack<>();
+            DSAStack<Double> distanceStack = new DSAStack<>();
             DSAGraphVertex vertex;
             
             vertex = endVertex;
             System.out.println("end = " + vertex.getLabel());
-            finalQueue.enqueue(vertex.getLabel());
-            distanceQueue.enqueue(vertex.getDistance());
+            finalStack.push(vertex.getLabel());
+            distanceStack.push(vertex.getDistance());
             vertex = vertex.getPreviousVertex();
 
             
             do
             {
                 System.out.println("next = " + vertex.getLabel());
-                finalQueue.enqueue(vertex.getLabel());
-                distanceQueue.enqueue(vertex.getDistance());
+                finalStack.push(vertex.getLabel());
+                distanceStack.push(vertex.getDistance());
                 vertex = vertex.getPreviousVertex();
             }while(!(vertex.equals(startVertex)));
 
             System.out.println("start = " + startVertex.getLabel());
-            finalQueue.enqueue(startVertex.getLabel());
-            distanceQueue.enqueue(startVertex.getDistance());
+            finalStack.push(startVertex.getLabel());
+            distanceStack.push(startVertex.getDistance());
 
-            dijkstras.setDistanceQueue(distanceQueue);
-            dijkstras.setFinalQueue(finalQueue);
+            dijkstras.setDistanceStack(distanceStack);
+            dijkstras.setFinalStack(finalStack);
 
-            System.out.println("getFinalQueue length " + dijkstras.getFinalQueue().getCount());
+            System.out.println("getFinalStack length " + dijkstras.getFinalStack().getCount());
         } 
 
         catch(NullPointerException e) 
@@ -842,7 +842,7 @@ public class DSAGraph implements Serializable
     {
         DSAGraphVertex startVertex, endVertex;
         DSAQueue<DSAGraphVertex> priorityQueue = new DSAQueue<>();
-        DSAQueue<String> finalQueue = new DSAQueue<>();
+        DSAStack<String> finalStack = new DSAStack<>();
         String label;
 
         try
@@ -878,13 +878,6 @@ public class DSAGraph implements Serializable
                 while(!(priorityQueue.isEmpty()))
                 {
                     DSAGraphVertex u = priorityQueue.dequeue();
-        
-                    // if(u.equals(endVertex))
-                    // {
-                    //     label = u.getLabel();
-                    //     finalQueue.enqueue(label);
-                    //     distanceQueue.enqueue(u.getDistance());
-                    // }
                     
                     if(!(u.equals(endVertex)))
                     {
@@ -932,8 +925,8 @@ public class DSAGraph implements Serializable
 
         else
         {
-            DSAQueue<String> FQ = dijkstras.getFinalQueue();
-            DSAQueue<Double> DQ = dijkstras.getDistanceQueue();
+            DSAStack<String> FQ = dijkstras.getFinalStack();
+            DSAStack<Double> DQ = dijkstras.getDistanceStack();
             int FQCount, DQCount;
             FQCount = FQ.getCount();
             DQCount = DQ.getCount();
@@ -942,7 +935,7 @@ public class DSAGraph implements Serializable
             
             for(int i = 0; i < FQCount; i++)
             {
-                System.out.print(FQ.dequeue());
+                System.out.print(FQ.pop());
 
                 if(!(FQ.isEmpty()))
                 {
@@ -951,11 +944,11 @@ public class DSAGraph implements Serializable
             }
 
             System.out.println("\tEND");
-            System.out.println("\nDISTANCE:\t" + DQ.peek());
+            System.out.println("\nDISTANCE:\t" + (DQ.getCount() - 1));
 
             for(int i = 0; i < DQCount; i++)
             {
-                System.out.print(DQ.dequeue());
+                System.out.print(DQ.pop());
 
                 if(!(DQ.isEmpty()))
                 {
