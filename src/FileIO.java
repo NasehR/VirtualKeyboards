@@ -23,10 +23,10 @@ public class FileIO
      * 
      * @throws FileNotFoundException: File could not be found.
      */
-    public static DSAGraph fileToGraph(String fileName) throws FileNotFoundException
+    public static DSAGraph<String> fileToGraph(String fileName) throws FileNotFoundException
     {
         String line;
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String>graph = new DSAGraph<>();
 
         try
         {
@@ -59,7 +59,7 @@ public class FileIO
      * 
      * @return: void.
      */
-    private static void lineToGraph(String line, DSAGraph graph) 
+    private static void lineToGraph(String line, DSAGraph<String>graph) 
     {
         String[] lineElements = line.split(" ");
             
@@ -96,7 +96,7 @@ public class FileIO
      * 
      * @IOException: Could not write file.
      */
-    public static void graphToFile(String fileName, DSAGraph graph) throws IOException
+    public static void graphToFile(String fileName, DSAGraph<String>graph) throws IOException
     {
         FileOutputStream fileStream = null;
         ObjectOutputStream objStream = null;
@@ -201,17 +201,18 @@ public class FileIO
      * 
      * @IOException: Incorrect input.
      */
-    public static DSAGraph load(String fileName) throws IOException
+    @SuppressWarnings("unchecked")
+    public static DSAGraph<String>load(String fileName) throws IOException
     {
         FileInputStream fileStream = null;
         ObjectInputStream objStream = null;
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String>graph = new DSAGraph<>();
         
         try
         {        
             fileStream = new FileInputStream(fileName);
             objStream = new ObjectInputStream(fileStream);
-            graph = (DSAGraph) objStream.readObject();
+            graph = (DSAGraph<String>) objStream.readObject();
             objStream.close();
             System.out.println("Deserialization complete.");
         }

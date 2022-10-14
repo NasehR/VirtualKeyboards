@@ -12,20 +12,20 @@
 import java.util.*;
 import java.io.*;
 
-public class DSAGraph implements Serializable
+public class DSAGraph<T> implements Serializable
 {
     // Graph Vertex
     private class DSAGraphVertex implements Comparable<Double>, Serializable
     {
         // DSAGraphVertex Class Fields:
-        private String label;
+        private T label;
         private Double distance;
         private DSALinkedList<DSAGraphVertex> links;
         private boolean visited;
 		private DSAGraphVertex previousVertex;
 
         // Constructor:
-        public DSAGraphVertex(String inLabel, Double inDistance)
+        public DSAGraphVertex(T inLabel, Double inDistance)
         {
             label = inLabel;
             distance = inDistance;
@@ -34,7 +34,7 @@ public class DSAGraph implements Serializable
         }
 
         // Alternative Constructor
-        public DSAGraphVertex(String inLabel)
+        public DSAGraphVertex(T inLabel)
         {
             label = inLabel;
             distance = null;
@@ -43,7 +43,7 @@ public class DSAGraph implements Serializable
         }
        
         // Accessor getLabel:
-        public String getLabel()
+        public T getLabel()
         {
             return label;
         }
@@ -128,11 +128,11 @@ public class DSAGraph implements Serializable
         // DSAGraphEdge Class Fields:
         private DSAGraphVertex from;
         private DSAGraphVertex to;
-        private String label;
+        private T label;
         private Double value;
 
         // Constructor:
-        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, String inLabel, Double inValue)
+        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, T inLabel, Double inValue)
         {
             from = fromVertex;
             to = toVertex;
@@ -141,7 +141,7 @@ public class DSAGraph implements Serializable
         }
 
         // Alternative Constructor:
-        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, String inLabel)
+        public DSAGraphEdge(DSAGraphVertex fromVertex, DSAGraphVertex toVertex, T inLabel)
         {
             from = fromVertex;
             to = toVertex;
@@ -150,7 +150,7 @@ public class DSAGraph implements Serializable
         }
 
         // Accessor getLabel:
-        public String getLabel()
+        public T getLabel()
         {
             return label;
         }
@@ -190,7 +190,7 @@ public class DSAGraph implements Serializable
     public class DijkstrasStacks
     {
         // DijkstrasStacks Class Fields:
-        private DSAStack<String> finalStack;
+        private DSAStack<T> finalStack;
         private DSAStack<Double> distanceStack;
 
         // Constructor:
@@ -201,13 +201,13 @@ public class DSAGraph implements Serializable
         }
 
         // Mutator setFinalStack:
-        public void setFinalStack(DSAStack<String> finalStack)
+        public void setFinalStack(DSAStack<T> finalStack)
         {
             this.finalStack = finalStack;
         }
 
         // Accessor getFinalStack:
-        public DSAStack<String> getFinalStack()
+        public DSAStack<T> getFinalStack()
         {
             return finalStack;
         }
@@ -228,7 +228,7 @@ public class DSAGraph implements Serializable
     //Class Fields:
     private DSALinkedList<DSAGraphVertex> vertices;
     private DSALinkedList<DSAGraphEdge> edges;
-    private DSALinkedList<String> overallPath;
+    private DSALinkedList<T> overallPath;
     private DijkstrasStacks dijkstras;
 
     // Constructor:
@@ -250,7 +250,7 @@ public class DSAGraph implements Serializable
      * 
      * @throws IllegalArgumentException: Vertex already exists.
      */
-    public void addVertex(String label, Double value) throws IllegalArgumentException
+    public void addVertex(T label, Double value) throws IllegalArgumentException
     {
         if(hasVertex(label))
         {
@@ -270,7 +270,7 @@ public class DSAGraph implements Serializable
      *
      * @throws IllegalArgumentException: Vertex already exists.
      */
-    public void addVertex(String label) throws IllegalArgumentException
+    public void addVertex(T label) throws IllegalArgumentException
     {
         if(hasVertex(label))
         {
@@ -293,7 +293,7 @@ public class DSAGraph implements Serializable
      *
      * @throws IllegalArgumentException: Vertex does not exists.
      */
-    public void removeVertex(String label) throws IllegalArgumentException
+    public void removeVertex(T label) throws IllegalArgumentException
     {
         if(!(hasVertex(label)))
         {
@@ -332,7 +332,8 @@ public class DSAGraph implements Serializable
      * 
      * @throws IllegalArgumentException: Edge already exists.
      */
-    public void addEdge(String fromLabel, String toLabel, Double edgeValue) throws IllegalArgumentException
+    @SuppressWarnings("unchecked")
+    public void addEdge(T fromLabel, T toLabel, Double edgeValue) throws IllegalArgumentException
     {
         if(hasEdge(fromLabel, toLabel))
         {
@@ -341,7 +342,7 @@ public class DSAGraph implements Serializable
 
         else if(!(hasEdge(fromLabel, toLabel)))
         {
-            String edgeLabel = fromLabel + "-" + toLabel;
+            T edgeLabel = (T) (fromLabel + "-" + toLabel);
             DSAGraphVertex origin = getVertex(fromLabel);
             DSAGraphVertex destination = getVertex(toLabel);
             DSAGraphEdge edge = new DSAGraphEdge(origin, destination, edgeLabel, edgeValue);
@@ -360,7 +361,8 @@ public class DSAGraph implements Serializable
      * 
      * @throws IllegalArgumentException: Edge already exists.
      */
-    public void addEdge(String fromLabel, String toLabel) throws IllegalArgumentException
+    @SuppressWarnings("unchecked")
+    public void addEdge(T fromLabel, T toLabel) throws IllegalArgumentException
     {
         if(hasEdge(fromLabel, toLabel))
         {
@@ -369,7 +371,7 @@ public class DSAGraph implements Serializable
 
         else if(!(hasEdge(fromLabel, toLabel)))
         {
-            String edgeLabel = fromLabel + "-" + toLabel;
+            T edgeLabel = (T) (fromLabel + "-" + toLabel);
             DSAGraphVertex origin = getVertex(fromLabel);
             DSAGraphVertex destination = getVertex(toLabel);
             DSAGraphEdge edge = new DSAGraphEdge(origin, destination, edgeLabel);
@@ -388,7 +390,8 @@ public class DSAGraph implements Serializable
      * 
      * @throws IllegalArgumentException: Edge does not exists.
      */
-    public void removeEdge(String fromLabel, String toLabel) throws IllegalArgumentException
+    @SuppressWarnings("unchecked")
+    public void removeEdge(T fromLabel, T toLabel) throws IllegalArgumentException
     {
         if(!(hasEdge(fromLabel, toLabel)))
         {
@@ -397,7 +400,7 @@ public class DSAGraph implements Serializable
 
         else if(hasEdge(fromLabel, toLabel))
         {
-            String edgeLabel = fromLabel + "-" + toLabel;
+            T edgeLabel = (T) (fromLabel + "-" + toLabel);
             System.out.println("Deleting edge: " + edgeLabel);
             edges.removeMiddle(getEdge(edgeLabel));
             getVertex(fromLabel).removeAdjacent(getVertex(toLabel));
@@ -411,7 +414,8 @@ public class DSAGraph implements Serializable
      * 
      * @return boolean: True if is the graph has the vertex.
      */
-    public boolean hasVertex(String label)
+    
+    public boolean hasVertex(T label)
     {
         boolean condition = false;
 
@@ -434,7 +438,7 @@ public class DSAGraph implements Serializable
      * 
      * @return boolean: True if the graph has the vertex.
      */
-    public boolean hasEdge(String fromLabel, String toLabel)
+    public boolean hasEdge(T fromLabel, T toLabel)
     {
         boolean condition = false;
         DSAGraphVertex origin = getVertex(fromLabel);
@@ -484,7 +488,7 @@ public class DSAGraph implements Serializable
      * 
      * @throws NoSuchElementException: Vertex does not exist.
      */
-    public DSAGraphVertex getVertex(String label) throws NoSuchElementException
+    public DSAGraphVertex getVertex(T label) throws NoSuchElementException
     {
         DSAGraphVertex vertex = null;
         
@@ -513,7 +517,7 @@ public class DSAGraph implements Serializable
      * 
      * @throws NoSuchElementException: Edge does not exist.
      */
-    public DSAGraphEdge getEdge(String label) throws NoSuchElementException
+    public DSAGraphEdge getEdge(T label) throws NoSuchElementException
     {
         DSAGraphEdge edge = null;
 
@@ -562,9 +566,9 @@ public class DSAGraph implements Serializable
      * 
      * @param: void.
      * 
-     * @return: DASLinkedList<String>.
+     * @return: DASLinkedList<T>.
      */
-    public DSALinkedList<String> getOverallPath()
+    public DSALinkedList<T> getOverallPath()
     {
         return this.overallPath;
     } 
@@ -576,7 +580,7 @@ public class DSAGraph implements Serializable
      * 
      * @return: DSALinkedList<DSAGraphVertex>.
      */
-    public DSALinkedList<DSAGraphVertex> getAdjacentVertex(String label) 
+    public DSALinkedList<DSAGraphVertex> getAdjacentVertex(T label) 
     {
         DSAGraphVertex vertex = getVertex(label);
         return vertex.getAdjacent();
@@ -590,7 +594,7 @@ public class DSAGraph implements Serializable
      * 
      * @return boolean: True if the two vertices are adjacent.
      */
-    public boolean isAdjacent(String label1, String label2) 
+    public boolean isAdjacent(T label1, T label2) 
     {
         boolean adjacent = false;
         DSAGraphVertex vertex1 = getVertex(label1);
@@ -844,7 +848,7 @@ public class DSAGraph implements Serializable
         try 
         {
             this.dijkstras = new DijkstrasStacks();
-            DSAStack<String> finalStack = new DSAStack<>();
+            DSAStack<T> finalStack = new DSAStack<>();
             DSAStack<Double> distanceStack = new DSAStack<>();
             DSAGraphVertex vertex;
             vertex = endVertex;
@@ -900,11 +904,12 @@ public class DSAGraph implements Serializable
      *
      * @throws NoSuchElementException: Either vertex do not exist.
      */
-    public void Dijkstras(String startLabel, String endLabel) throws NoSuchElementException
+    @SuppressWarnings("unchecked")
+    public void Dijkstras(T startLabel, T endLabel) throws NoSuchElementException
     {
         DSAGraphVertex startVertex, endVertex;
         DSAQueue<DSAGraphVertex> priorityQueue = new DSAQueue<>();
-        String label;
+        T label;
 
         try
         {
@@ -930,7 +935,7 @@ public class DSAGraph implements Serializable
         
                 for(DSAGraphVertex v : startVertex.getAdjacent())
                 {
-                    String edgeLabel = (startVertex.getLabel() + "-" + v.getLabel());
+                    T edgeLabel = (T) (startVertex.getLabel() + "-" + v.getLabel());
                     v.setDistance(startVertex.getDistance() + getEdge(edgeLabel).getValue());
                     v.setPreviousVertex(startVertex);
                     priorityQueue.enqueue(v);
@@ -944,7 +949,7 @@ public class DSAGraph implements Serializable
                     {
                         for(DSAGraphVertex v : u.getAdjacent())
                         {
-                            DSAGraphEdge edge = getEdge(u.getLabel() + "-" + v.getLabel());
+                            DSAGraphEdge edge = getEdge((T) (u.getLabel() + "-" + v.getLabel()));
                             Double tempDistance = u.getDistance() + edge.getValue();
                             
                             if(tempDistance < v.getDistance())
@@ -981,6 +986,7 @@ public class DSAGraph implements Serializable
      * 
      * @throws NullPointerException: dijkstras is null.
      */
+    @SuppressWarnings("unchecked")
     public void displayFinal() throws NullPointerException
     {
         if(this.dijkstras == null)
@@ -990,7 +996,7 @@ public class DSAGraph implements Serializable
 
         else
         {
-            DSAStack<String> FQ = dijkstras.getFinalStack();
+            DSAStack<T> FQ = dijkstras.getFinalStack();
             DSAStack<Double> DQ = dijkstras.getDistanceStack();
             int FQCount, DQCount;
             FQCount = FQ.getCount();

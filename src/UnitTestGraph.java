@@ -33,7 +33,7 @@ public class UnitTestGraph
     {
         System.out.print("\tTesting Default: ");
 
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         assert graph != null : "Should not be null";
 
@@ -45,7 +45,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Add Vertex: ");
 
         String[] labels = {"A", "B", "C", "D"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {
@@ -70,7 +70,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Add Edge: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {
@@ -103,7 +103,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Vertex Count: ");
 
         String[] labels = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {
@@ -120,7 +120,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Edge Count: ");
 
         String[] labels = {"A", "B", "C", "D", "E", "F"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {
@@ -144,7 +144,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Vertex: ");
 
         String[] labels = {"A", "B", "C", "D", "E", "F"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {
@@ -169,7 +169,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Edge: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {
@@ -200,7 +200,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Adjacent Vertices: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {
@@ -231,7 +231,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Is Adjacent: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {
@@ -264,7 +264,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Display As List: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
 
         for(String label: labels)
         {

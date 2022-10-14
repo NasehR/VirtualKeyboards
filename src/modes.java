@@ -22,7 +22,7 @@ public class modes
      */
     public static void interactiveMenu()
     {
-        DSAGraph graph = new DSAGraph();
+        DSAGraph<String> graph = new DSAGraph<>();
         DSALinkedList<String> OP = new DSALinkedList<>();
         DSAQueue<String> word = new DSAQueue<>();
         DSAQueue<String> path = new DSAQueue<>();
@@ -327,7 +327,7 @@ public class modes
     {
         try 
         {
-            DSAGraph graph = new DSAGraph();
+            DSAGraph<String> graph = new DSAGraph<>();
             DSALinkedList<String> OP = new DSALinkedList<>();
             DSAQueue<String> lines = new DSAQueue<>();
             DSAQueue<String> word = new DSAQueue<>();
