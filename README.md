@@ -2,7 +2,7 @@
 
 ## Overview
 This project was created to explore the shortest path between characters the a string.
-To browse the code please visit the following link: [keyMeUp.java]()
+To browse the code please visit the following link: [keyMeUp.java](https://github.com/NasehR/VirtualKeyboards/blob/main/src/keyMeUp.java)
 
 ## Command-Line Instructions
 * **Prerequisites:**
