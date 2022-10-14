@@ -6,7 +6,7 @@ To browse the code please visit the following link: [keyMeUp.java]()
 
 ## Command-Line Instructions
 * **Prerequisites:**
-    * Make sure you have java installed on your machine by calling 'javac --version' in your terminal.
+    * Make sure you have java installed on your machine by calling `javac --version` in your terminal.
 
 * **How to run:**
     * In your terminal `cd` to the main folder `src`.
