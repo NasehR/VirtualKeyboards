@@ -9,22 +9,26 @@
  * Practical : 04
  */
 
-package dependencies;
-
 import java.util.*;
 
 public class DSAQueue<T> implements Iterable<T>
 {
-    //Class fields
+    // Class fields
     private DSALinkedList<T> queue;
 
-    //Constructor
+    // Constructor
     public DSAQueue()
     {
         queue  = new DSALinkedList<T>();
     }
 
-    //Getter Iterator:
+    /*
+     * Iterates through the queue.
+     * 
+     * @param: void.
+     * 
+     * @return: Iterator<T>.
+     */
     public Iterator<T> iterator()
     {
         return queue.iterator();
@@ -73,7 +77,7 @@ public class DSAQueue<T> implements Iterable<T>
      * 
      * @return: T.
      *
-     * @NoSuchElementException: Queue is empty.
+     * @throws NoSuchElementException: Queue is empty.
      */    
     public T dequeue() throws NoSuchElementException
     {
@@ -92,7 +96,7 @@ public class DSAQueue<T> implements Iterable<T>
      * 
      * @return: T.
      * 
-     * @NoSuchElementException: Queue is empty.
+     * @throws NoSuchElementException: Queue is empty.
      */
     public T peek() throws NoSuchElementException
     {

@@ -9,10 +9,7 @@
  * Practical : 06
  */
 
-package test;
-
 import java.util.*;
-import dependencies.DSAQueue;
 
 public class UnitTestQueue 
 {
@@ -23,7 +20,6 @@ public class UnitTestQueue
         testDefault();
         testGetCount();
         testIsEmpty();
-        testIsFull();
         testEnqueue();
         testDequeue();
         testPeek();
@@ -48,7 +44,7 @@ public class UnitTestQueue
         int[] count = {1,2};
         double value = 2;
 
-        DSAQueue<Object> queue = new DSAQueue<>(2);
+        DSAQueue<Object> queue = new DSAQueue<>();
 
         for(int i = 0; i < count.length; i++)
         {
@@ -66,32 +62,13 @@ public class UnitTestQueue
         int[] count = {1, 2};
         double value = 2;
 
-        DSAQueue<Object> queue = new DSAQueue<>(2);
+        DSAQueue<Object> queue = new DSAQueue<>();
         assert queue.isEmpty() : "The queue should initially be empty";
         queue.enqueue(value);
 
         assert !(queue.isEmpty()) : "The queue should not be empty";
         queue.enqueue(value);
 
-        assert queue.isFull() : "The queue should be full";
-        System.out.println("\t\tpassed.");
-    }
-
-    public static void testIsFull()
-    {
-        System.out.print("\tTesting isFull: ");
-        
-        int[] count = {1, 2};
-        double value = 2;
-
-        DSAQueue<Object> queue = new DSAQueue<>(2);
-        assert !(queue.isFull()) : "The queue should initially be empty";
-        queue.enqueue(value);
-
-        assert !(queue.isFull()) : "The queue should not be empty";
-        queue.enqueue(value);
-
-        assert queue.isFull() : "The queue should be full";
         System.out.println("\t\tpassed.");
     }
 
@@ -102,7 +79,7 @@ public class UnitTestQueue
         int[] item = {1, 2, 3, 4, 5};
         Object condition;
 
-        DSAQueue<Object> queue = new DSAQueue<>(4);
+        DSAQueue<Object> queue = new DSAQueue<>();
 
         queue.enqueue(item[0]);
         condition = queue.peek();
@@ -116,6 +93,8 @@ public class UnitTestQueue
         condition = queue.dequeue();
         assert condition.equals(item[1]) : "The peek should be " + item[1];
 
+        System.out.println("\t\tpassed.");
+
         try
         {
             for(int i = 0; i < item.length; i++)
@@ -125,6 +104,7 @@ public class UnitTestQueue
                 assert condition.equals(1) : "Top should be the first one pushed";
             }
         }
+
         catch(IllegalStateException ex)
         {
             System.out.println("\t\tpassed.");
@@ -138,7 +118,7 @@ public class UnitTestQueue
 
         int[] item = {1, 2, 3, 4, 5};
         Object condition;
-        DSAQueue<Object> queue = new DSAQueue<>(5);
+        DSAQueue<Object> queue = new DSAQueue<>();
 
         //Remove from the queue
         queue.enqueue(item[0]);
@@ -211,7 +191,7 @@ public class UnitTestQueue
 
         int[] item = {1, 2, 3, 4, 5};
         Object condition;
-        DSAQueue<Object> queue = new DSAQueue<>(5);
+        DSAQueue<Object> queue = new DSAQueue<>();
 
         queue.enqueue(item[0]);
         queue.enqueue(item[1]);

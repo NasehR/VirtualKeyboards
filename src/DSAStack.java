@@ -9,8 +9,6 @@
  * Practical : 04
  */
 
-package dependencies;
-
 import java.util.*;
 
 public class DSAStack<T>
@@ -18,13 +16,19 @@ public class DSAStack<T>
     //Class fields
     private DSALinkedList<T> stack;
 
-    //Constructor
+    // Constructor
     public DSAStack()
     {
         stack = new DSALinkedList<T>();
     }
 
-    //Getter Iterator:
+    /*
+     * Iterates through the stack.
+     * 
+     * @param: void.
+     * 
+     * @return: Iterator<T>.
+     */    
     public Iterator<T> iterator()
     {
         return stack.iterator();
@@ -73,9 +77,9 @@ public class DSAStack<T>
      * 
      * @return: T.
      * 
-     * @IllegalStateException: stack is empty.
+     * @throws NoSuchElementException: Stack is empty.
      */
-    public T pop() throws IllegalStateException
+    public T pop() throws NoSuchElementException
     {
         if(isEmpty())
         {
@@ -92,9 +96,9 @@ public class DSAStack<T>
      * 
      * @return: T.
      * 
-     * @IllegalStateException: Stack is empty.
+     * @throws NoSuchElementException: Stack is empty.
      */
-    public T top() throws IllegalStateException
+    public T top() throws NoSuchElementException
     {
         if(isEmpty())
         {

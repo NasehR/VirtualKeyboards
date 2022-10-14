@@ -6,10 +6,8 @@
  *  LAST MOD: 12/10/15
  *  REQUIRES: NONE
  ***************************************************************************/
-package test;
 
 import java.io.*;
-import dependencies.DSALinkedList;
 
 public class UnitTestLinkedList
 {

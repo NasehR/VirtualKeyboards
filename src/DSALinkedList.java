@@ -9,8 +9,6 @@
  * Practical : 04
  */
 
-package dependencies;
-
 import java.io.*;
 import java.util.*;
 
@@ -24,12 +22,12 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
     // Linked List Node:
     private class DSAListNode implements Serializable
     {
-        // Class Fields:
+        // DSAListNode Class Fields:
         private T data;
         private DSAListNode prev;
         private DSAListNode next;
         
-        //Constructor:
+        // Constructor:
         public DSAListNode(T data)
         {
             this.data = data;
@@ -37,26 +35,31 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
             this.prev = null;
         }
 
+        // Accessors getData:
         public T getData()
         {
             return data;
         }
 
+        // Accessors getNext:
         public DSAListNode getNext()
         {
             return next;
         }
 
+        // Mutators setNext
         public void setNext(DSAListNode next)
         {
             this.next = next;
         }
 
+        // Accessors getPrev:
         public DSAListNode getPrev()
         {
             return prev;
         }
 
+        // Mutators setPrev:
         public void setPrev(DSAListNode prev)
         {
             this.prev = prev;
@@ -66,24 +69,24 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
     // Linked List Iterator:
     private class DSALinkedListIterator implements Iterator<T>
     {
-        // Class Fields:
+        // DSALinkedListIterator Class Fields:
         private DSAListNode nextNode;
         private DSAListNode current;
 
-        // Alternate Constructor:
+        // Constructor:
         public DSALinkedListIterator(DSALinkedList<T> list)
         {
             nextNode = list.head;
             current = null;
         }
 
-        //Getter hasNext:
+        // Accessor hasNext:
         public boolean hasNext()
         {
             return (nextNode != null);
         }
 
-        //Setter next
+        // Accessor next
         public T next()
         {
             T value;
@@ -102,7 +105,8 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
 
             return value;
         }
-        
+         
+        // Mutator remove
         public void remove() throws IllegalStateException
         {
             throw new UnsupportedOperationException("Unsupported Operation.");
@@ -117,7 +121,13 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
         counter = 0;
     }
 
-    //Getter iterator:
+    /*
+     * Iterates through the LinkedList.
+     * 
+     * @param: void.
+     * 
+     * @return: DSALinkedListIterator.
+     */
     public Iterator<T> iterator()
     {
         return new DSALinkedListIterator(this);
@@ -126,7 +136,7 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
     /*
      * Inserts the given value to the front of the linked list.
      * 
-     * @param: Value to insert.
+     * @param newValue: Value to insert.
      * 
      * @return: void.
      */
@@ -153,7 +163,7 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
     /*
      * Inserts the given value to the end of the linked list.
      * 
-     * @param: Value to insert.
+     * @param newValue: Value to insert.
      * 
      * @return: void.
      */
@@ -186,7 +196,7 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
      * 
      * @return: T.
      *
-     * @NoSuchElementException: Linkedlist is empty.
+     * @throws NoSuchElementException: Linkedlist is empty.
      */
     public T removeFirst() throws NoSuchElementException
     {    
@@ -224,7 +234,7 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
      * 
      * @return: T.
      *
-     * @NoSuchElementException: Linkedlist is empty.
+     * @throws NoSuchElementException: Linkedlist is empty.
      */
     public T removeMiddle(T nodeData) throws NoSuchElementException
     {
@@ -304,7 +314,7 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
      * 
      * @return: T.
      * 
-     * @NoSuchElementException: Linkedlist is empty.
+     * @throws NoSuchElementException: Linkedlist is empty.
      */
     public T removeLast() throws NoSuchElementException
     {
@@ -365,8 +375,10 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
      * @param: void.
      * 
      * @return: T.
+     * 
+     * @throws NoSuchElementException: Linkedlist is empty.
      */
-    public T peekFirst()
+    public T peekFirst() throws NoSuchElementException
     {
         if(isEmpty())
         {
@@ -382,6 +394,8 @@ public class DSALinkedList<T> implements Serializable, Iterable<T>
      * @param: void.
      * 
      * @return: T.
+     * 
+     * @throws NoSuchElementException: Linkedlist is empty.
      */
     public T peekLast()
     {

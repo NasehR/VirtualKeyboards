@@ -9,10 +9,7 @@
  * Practical : 06
  */
 
-package test;
-
 import java.util.*;
-import dependencies.DSAGraph;
 
 public class UnitTestGraph
 {
@@ -30,14 +27,13 @@ public class UnitTestGraph
         testGetAdjacentVertex();
         testIsAdjacent();
         testDisplayAsList();
-        testDisplayAsMatrix();
     }
 
     public static void testConstructor()
     {
         System.out.print("\tTesting Default: ");
 
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         assert graph != null : "Should not be null";
 
@@ -49,7 +45,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Add Vertex: ");
 
         String[] labels = {"A", "B", "C", "D"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -74,7 +70,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Add Edge: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -107,7 +103,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Vertex Count: ");
 
         String[] labels = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -124,7 +120,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Edge Count: ");
 
         String[] labels = {"A", "B", "C", "D", "E", "F"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -148,7 +144,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Vertex: ");
 
         String[] labels = {"A", "B", "C", "D", "E", "F"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -173,7 +169,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Edge: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -187,8 +183,13 @@ public class UnitTestGraph
         }
 
         assert graph.getEdge("A-B") != null : "Edge should not be null.";
-        // assert graph.getEdge("C-E") == null : "\t\t\tpassed.";
-        if(graph.getEdge("C-E") == null)
+
+        try 
+        {
+            graph.getEdge("C-E");  
+        } 
+        
+        catch(NoSuchElementException e)
         {
             System.out.println("\t\t\tpassed.");
         }
@@ -199,7 +200,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Get Adjacent Vertices: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -230,7 +231,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Is Adjacent: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -263,7 +264,7 @@ public class UnitTestGraph
         System.out.print("\tTesting Display As List: ");
 
         String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph<String> graph = new DSAGraph<>();
+        DSAGraph graph = new DSAGraph();
 
         for(String label: labels)
         {
@@ -279,28 +280,5 @@ public class UnitTestGraph
         System.out.println("\t\tpassed.");
 
         graph.displayAsList();
-    }
-
-    public static void testDisplayAsMatrix()
-    {
-        System.out.print("\tTesting Display As Matrix: ");
-
-        String[] labels = {"A", "B", "C", "D", "E"};
-        DSAGraph<String> graph = new DSAGraph<>();
-
-        for(String label: labels)
-        {
-            graph.addVertex(label, (double) 1);
-        }
-
-        for(String label: labels)
-        {
-            graph.addEdge("A", label, (double) 1);
-            graph.addEdge("D", label, (double) 1);
-        }
-        
-        System.out.println("\t\tpassed.");
-
-        graph.displayAsMatrix();
     }
 }

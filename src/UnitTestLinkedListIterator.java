@@ -9,10 +9,7 @@
  * Practical : 06
  */
 
-package test;
-
 import java.util.*;
-import dependencies.DSALinkedList;
 
 public abstract class UnitTestLinkedListIterator implements Iterable<Object>
 {

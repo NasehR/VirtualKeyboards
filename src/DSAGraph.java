@@ -9,26 +9,35 @@
  * Practical : 06
  */
 
-package dependencies;
-
 import java.util.*;
 import java.io.*;
 
 public class DSAGraph implements Serializable
 {
+    // Graph Vertex
     private class DSAGraphVertex implements Comparable<Double>, Serializable
     {
-        // Class Fields:
+        // DSAGraphVertex Class Fields:
         private String label;
-        private Double distance = null;
+        private Double distance;
         private DSALinkedList<DSAGraphVertex> links;
         private boolean visited;
 		private DSAGraphVertex previousVertex;
 
         // Constructor:
+        public DSAGraphVertex(String inLabel, Double inDistance)
+        {
+            label = inLabel;
+            distance = inDistance;
+            links = new DSALinkedList<>();
+            previousVertex = null;
+        }
+
+        // Alternative Constructor
         public DSAGraphVertex(String inLabel)
         {
             label = inLabel;
+            distance = null;
             links = new DSALinkedList<>();
             previousVertex = null;
         }
@@ -51,13 +60,13 @@ public class DSAGraph implements Serializable
             return links;
         }
 
-        //Setter addEdge:
+        // Mutator addEdge:
         public void addEdge(DSAGraphVertex vertex)
         {
             links.insertLast(vertex);
         }
 
-        // Setter setVisited:
+        // Mutator setVisited:
         public void setVisited()
         {
             visited = true;
@@ -75,16 +84,19 @@ public class DSAGraph implements Serializable
             return visited;
         }
 
+        // Mutator setDistance:
 		public void setDistance(double newDistance)
 		{
 			distance = newDistance;
 		}
 
+        // Mutator setPreviousVertex:
         public void setPreviousVertex(DSAGraphVertex vertex)
         {
             previousVertex = vertex;
         }
 
+        // Accessor getPreviousVertex:
         public DSAGraphVertex getPreviousVertex()
         {
             return previousVertex;
@@ -96,11 +108,13 @@ public class DSAGraph implements Serializable
             return label.toString();
         }
 
+        // Mutator removeAdjacent:
         public void removeAdjacent(DSAGraphVertex vertexLabel)
         {
             links.removeMiddle(vertexLabel);
         }
 
+        // Accessor compareTo:
         @Override
         public int compareTo(Double other)
         {
@@ -108,9 +122,10 @@ public class DSAGraph implements Serializable
         }
     }
 
+    // Graph Edge
     private class DSAGraphEdge implements Serializable
     {
-        // Class Fields:
+        // DSAGraphEdge Class Fields:
         private DSAGraphVertex from;
         private DSAGraphVertex to;
         private String label;
@@ -171,8 +186,10 @@ public class DSAGraph implements Serializable
         }
     } 
     
+    // Dijkstra's Stacks
     public class DijkstrasStacks
     {
+        // DijkstrasStacks Class Fields:
         private DSAStack<String> finalStack;
         private DSAStack<Double> distanceStack;
 
@@ -214,7 +231,7 @@ public class DSAGraph implements Serializable
     private DSALinkedList<String> overallPath;
     private DijkstrasStacks dijkstras;
 
-    //Constructor:
+    // Constructor:
     public DSAGraph()
     {
         vertices = new DSALinkedList<>();
@@ -231,7 +248,7 @@ public class DSAGraph implements Serializable
      * 
      * @return: void.
      * 
-     * @IllegalArgumentException: Vertex already exists.
+     * @throws IllegalArgumentException: Vertex already exists.
      */
     public void addVertex(String label, Double value) throws IllegalArgumentException
     {
@@ -251,7 +268,7 @@ public class DSAGraph implements Serializable
      * 
      * @return: void.
      *
-      * @IllegalArgumentException: Vertex already exists.
+     * @throws IllegalArgumentException: Vertex already exists.
      */
     public void addVertex(String label) throws IllegalArgumentException
     {
@@ -274,7 +291,7 @@ public class DSAGraph implements Serializable
      * 
      * @return: void.
      *
-     * @IllegalArgumentException: Vertex does not exists.
+     * @throws IllegalArgumentException: Vertex does not exists.
      */
     public void removeVertex(String label) throws IllegalArgumentException
     {
@@ -309,11 +326,11 @@ public class DSAGraph implements Serializable
      * 
      * @param fromLabel: The label of the origin vertex.
      * @param toLabel: The label of the destination vertex.
-     * @param value: The value of the edge to be added.
+     * @param edgeValue: The value of the edge to be added.
      * 
      * @return: void.
      * 
-     * @IllegalArgumentException: Edge already exists.
+     * @throws IllegalArgumentException: Edge already exists.
      */
     public void addEdge(String fromLabel, String toLabel, Double edgeValue) throws IllegalArgumentException
     {
@@ -341,7 +358,7 @@ public class DSAGraph implements Serializable
      * 
      * @return: void.
      * 
-     * @IllegalArgumentException: Edge already exists.
+     * @throws IllegalArgumentException: Edge already exists.
      */
     public void addEdge(String fromLabel, String toLabel) throws IllegalArgumentException
     {
@@ -369,7 +386,7 @@ public class DSAGraph implements Serializable
      * 
      * return: void.
      * 
-     * @IllegalArgumentException: Edge does not exists.
+     * @throws IllegalArgumentException: Edge does not exists.
      */
     public void removeEdge(String fromLabel, String toLabel) throws IllegalArgumentException
     {
@@ -385,8 +402,6 @@ public class DSAGraph implements Serializable
             edges.removeMiddle(getEdge(edgeLabel));
             getVertex(fromLabel).removeAdjacent(getVertex(toLabel));
         }
-
-        // return edges;
     }
 
     /*
@@ -394,7 +409,7 @@ public class DSAGraph implements Serializable
      * 
      * @param label: The label of the vertex to be checked.
      * 
-     * @return: boolean.
+     * @return boolean: True if is the graph has the vertex.
      */
     public boolean hasVertex(String label)
     {
@@ -417,7 +432,7 @@ public class DSAGraph implements Serializable
      * @param toLabel: The label of the origin vertex.
      * @param fromLabel: The label of the destination vertex.
      * 
-     * @return: boolean.
+     * @return boolean: True if the graph has the vertex.
      */
     public boolean hasEdge(String fromLabel, String toLabel)
     {
@@ -441,7 +456,7 @@ public class DSAGraph implements Serializable
      * 
      * @param: void.
      * 
-     * @return: int.
+     * @return int: Number of vertices.
      */
     public int getVertexCount()
     {
@@ -453,7 +468,7 @@ public class DSAGraph implements Serializable
      * 
      * @param: void.
      * 
-     * @return: int.
+     * @return int: Number of edges.
      */
     public int getEdgeCount()
     {
@@ -465,9 +480,11 @@ public class DSAGraph implements Serializable
      * 
      * @param label: The label of the vertex to be returned.
      * 
-     * @return: DSAGraphVertex.
+     * @return DSAGraphVertex: The vertex with the label provided.
+     * 
+     * @throws NoSuchElementException: Vertex does not exist.
      */
-    public DSAGraphVertex getVertex(String label) 
+    public DSAGraphVertex getVertex(String label) throws NoSuchElementException
     {
         DSAGraphVertex vertex = null;
         
@@ -492,9 +509,11 @@ public class DSAGraph implements Serializable
      * 
      * @param label: The label of the edge to be returned.
      * 
-     * @return: DSAGraphEdge.
+     * @return DSAGraphEdge: The edge with the label provided.
+     * 
+     * @throws NoSuchElementException: Edge does not exist.
      */
-    public DSAGraphEdge getEdge(String label)
+    public DSAGraphEdge getEdge(String label) throws NoSuchElementException
     {
         DSAGraphEdge edge = null;
 
@@ -506,13 +525,18 @@ public class DSAGraph implements Serializable
             }
         }
 
+        if(edge == null)
+        {
+            throw new NoSuchElementException("Edge is not in the graph.");
+        }
+
         return edge;
     }
 
     /*
      * Gets all the stacks in the DijkstrasStack class.
      * 
-     * @param : void.
+     * @param: void.
      * 
      * @return: DijkstrasStack.
      */
@@ -564,7 +588,7 @@ public class DSAGraph implements Serializable
      * @param label1: The label of the vertex 1.
      * @param label2: The label of the vertex 2.
      * 
-     * @return: boolean.
+     * @return boolean: True if the two vertices are adjacent.
      */
     public boolean isAdjacent(String label1, String label2) 
     {
@@ -613,7 +637,7 @@ public class DSAGraph implements Serializable
      * 
      * @param vertex: The vertex to that is not visted.
      * 
-     * @return: DSALinkedList<DSAGraphVertex>.
+     * @return DSALinkedList<DSAGraphVertex>: Linkedlist of all the unvisited vertices.
      */
     private DSALinkedList<DSAGraphVertex> getNotVisited(DSAGraphVertex vertex)
     {
@@ -720,7 +744,7 @@ public class DSAGraph implements Serializable
      * 
      * @param: void.
      * 
-     * @return: DSAQueue<DSAGraphVertex>.
+     * @return DSAQueue<DSAGraphVertex>: Path of breath first search.
      */
     public DSAQueue<DSAGraphVertex> BFS()
     {
@@ -761,7 +785,7 @@ public class DSAGraph implements Serializable
      * 
      * @param: void.
      * 
-     * @return: DSAQueue<DSAGraphVertex>.
+     * @returnDSAQueue<DSAGraphVertex>: Path of depth first search.
      */
     public DSAQueue<DSAGraphVertex> DFS()
     {
@@ -874,7 +898,7 @@ public class DSAGraph implements Serializable
      * 
      * @return: void.
      *
-     * @NoSuchElementException: Element does not exist.
+     * @throws NoSuchElementException: Either vertex do not exist.
      */
     public void Dijkstras(String startLabel, String endLabel) throws NoSuchElementException
     {
@@ -944,7 +968,7 @@ public class DSAGraph implements Serializable
 
         catch (NoSuchElementException e)
         {
-            System.out.println("No such element exists.");    
+            throw new NoSuchElementException("Edge is not in the graph.");
         }
     }
 
@@ -955,13 +979,13 @@ public class DSAGraph implements Serializable
      * 
      * @return: void.
      * 
-     * @NullPointerException: dijkstras is null.
+     * @throws NullPointerException: dijkstras is null.
      */
     public void displayFinal() throws NullPointerException
     {
         if(this.dijkstras == null)
         {
-            throw new NullPointerException();
+            throw new NullPointerException("dijkstras is null.");
         }
 
         else

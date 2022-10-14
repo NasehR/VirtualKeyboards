@@ -9,23 +9,19 @@
  * Practical : 06
  */
 
-package dependencies;
-
 import java.io.*;
 import java.util.*;
-
-import dependencies.DSAGraph.DijkstrasStacks;
 
 public class FileIO
 {
     /*
      * Read a file and converts it to a graph
      * 
-     * @param: fileName.
+     * @param fileName: The file to be read.
      * 
      * @return: DSAGraph<String>.
      * 
-     * @FileNotFoundException: File could not be found.
+     * @throws FileNotFoundException: File could not be found.
      */
     public static DSAGraph fileToGraph(String fileName) throws FileNotFoundException
     {

@@ -9,8 +9,6 @@
  * Practical : 
  */
 
-package dependencies;
-
 import java.util.*;
 import java.io.*;
 

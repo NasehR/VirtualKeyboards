@@ -1,7 +1,5 @@
-package test;
 
 import java.util.*;
-import dependencies.DSAStack;
 
 public class UnitTestStack 
 {
