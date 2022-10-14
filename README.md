@@ -2,7 +2,7 @@
 
 ## Overview
 This project was created to explore the shortest path between characters the a string.
-To browse the code please visit the following link: [keyMeUp.java](https://github.com/NasehR/VirtualKeyboards/blob/main/src/keyMeUp.java)
+To browse the code please visit the following link: [Source Code](https://github.com/NasehR/VirtualKeyboards/tree/main/src)
 
 ## Command-Line Instructions
 * **Prerequisites:**
@@ -26,10 +26,10 @@ To browse the code please visit the following link: [keyMeUp.java](https://githu
         ```
         java keyMeUp -s [File 1] [File 2] [File 3]
         ```
-        where :
-            [File 1] is the keyboards layout file.
-            [File 2] contains the string(s) that the program would search for.
-            [File 3] saves the output to the file.
+        * where :
+            * [File 1] is the keyboards layout file.
+            * [File 2] contains the string(s) that the program would search for.
+            * [File 3] saves the output to the file.
 
     * Run test cases:
         * To run test case for DSALinkedList, type the following command in your terminal:
