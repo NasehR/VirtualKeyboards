@@ -184,6 +184,19 @@ public class modes
                             {
                                 word.enqueue(Character.toString(arr[i]));
                             }
+
+                            else if(graph.hasVertex((Character.toString(arr[i])).toLowerCase()))
+                            {
+                                word.enqueue((Character.toString(arr[i])).toLowerCase());
+                            }
+
+                            if(arr[i] == ' ')
+                            {
+                                if(graph.hasVertex("space"))
+                                {
+                                    word.enqueue("space");
+                                }
+                            }
                         }
                         break;
 
@@ -205,9 +218,8 @@ public class modes
                                 double cost, currentCost;
                                 cost = 0;
 
-                                for(int i = 0; i < (length + 1); i++)
+                                for(int i = 0; i < (length - 1); i++)
                                 {
-                                    System.out.println(length);
                                     startVertex = word.dequeue();
                                     endVertex = word.peek();
                                     System.out.print("Start: " + startVertex + " End: " + endVertex +"\n");
@@ -215,16 +227,30 @@ public class modes
                                     System.out.println();
                                     graph.displayFinal();
                                     OP = graph.getOverallPath();
-                                    currentCost =  (double) (graph.getOverallPath().getCount() - 1);
+                                    
+                                    if(graph.getOverallPath().getCount() > 0)
+                                    {
+                                        currentCost =  (double) (graph.getOverallPath().getCount() - 1);
+                                    }
+
+                                    else
+                                    {
+                                        currentCost =  (double) (graph.getOverallPath().getCount());
+                                    }
+                                    
                                     cost = cost + currentCost;
                                     FileIO.writeCSV("output.csv", startVertex, endVertex, OP, cost);
+
+                                    if(i == length - 2)
+                                    {
+                                        word.dequeue();
+                                    }
                                 }
                                 break;
                             
                             case 0:
                                 for(int i = 0; i < (length + 1); i++)
                                 {
-                                    System.out.println(length);
                                     startVertex = word.dequeue();
                                     endVertex = word.peek();
                                     System.out.print("Start: " + startVertex + " End: " + endVertex +"\n");
@@ -234,7 +260,6 @@ public class modes
                                 }
                                 break;
                         }
-                        // AN OPTION TO SAVE
                         break;
 
                     case 9:
@@ -278,14 +303,68 @@ public class modes
         try 
         {
             DSAGraph graph = new DSAGraph();
-            System.out.println("keyFile: " + keyFile);
-            System.out.println("strFile: " + strFile);
-            System.out.println("pathFile: " + pathFile);
-
-            graph = FileIO.fileToGraph(keyFile);
-            // graph.displayAsList();
+            DSALinkedList<String> OP = new DSALinkedList<>();
+            DSAQueue<String> lines = new DSAQueue<>();
+            DSAQueue<String> word = new DSAQueue<>();
+            String startVertex, endVertex, line;
+            int wordLength, lineLength;
+            double cost, currentCost;
             
-            FileIO.readFile(strFile);
+            graph = FileIO.fileToGraph(keyFile);            
+            FileIO.readFile(strFile, lines);
+            
+            lineLength = lines.getCount();
+            while(!(lines.isEmpty()))
+            {
+                cost = 0;
+                line = lines.dequeue();
+                char[] arr = line.toCharArray();
+                for(int i = 0; i < arr.length; i++)
+                {
+                    if(graph.hasVertex(Character.toString(arr[i])))
+                    {   
+                        word.enqueue(Character.toString(arr[i]));
+                    }
+                    
+                    else if(graph.hasVertex((Character.toString(arr[i])).toLowerCase()))
+                    {
+                        word.enqueue((Character.toString(arr[i])).toLowerCase());
+                    }
+
+                    if(arr[i] == ' ')
+                    {
+                        if(graph.hasVertex("space"))
+                        {
+                            word.enqueue("space");
+                        }
+                    }
+                }
+                
+                wordLength = word.getCount();
+
+                for(int i = 0; i < (wordLength - 1); i++)
+                {
+                    startVertex = word.dequeue();
+                    endVertex = word.peek();
+                    graph.Dijkstras(startVertex, endVertex);
+                    OP = graph.getOverallPath();
+                    if(graph.getOverallPath().getCount() > 0)
+                    {
+                        currentCost =  (double) (graph.getOverallPath().getCount() - 1);
+                    }
+                    else
+                    {
+                        currentCost =  (double) (graph.getOverallPath().getCount());
+                    }
+                    cost = cost + currentCost;
+                    FileIO.writeCSV(pathFile, startVertex, endVertex, OP, cost);
+
+                    if(i == wordLength - 2)
+                    {
+                        word.dequeue();
+                    }
+                }
+            }
         }
 
         catch(IllegalArgumentException e)
@@ -302,6 +381,11 @@ public class modes
         catch(IOException e3)
         {
             System.out.println(e3.getMessage());
+        }
+
+        catch(NoSuchElementException e4)
+        {
+            System.out.println();
         }
     }
 

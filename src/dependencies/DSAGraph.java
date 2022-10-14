@@ -827,7 +827,6 @@ public class DSAGraph implements Serializable
             
             if(!(endVertex.equals(startVertex)))
             {
-                System.out.println("end = " + vertex.getLabel());
                 finalStack.push(vertex.getLabel());
                 distanceStack.push(vertex.getDistance());
                 overallPath.insertFirst(vertex.getLabel());
@@ -836,14 +835,12 @@ public class DSAGraph implements Serializable
                 
                 while(!(vertex.equals(startVertex)))
                 {
-                    System.out.println("next = " + vertex.getLabel());
                     finalStack.push(vertex.getLabel());
                     distanceStack.push(vertex.getDistance());
                     overallPath.insertFirst(vertex.getLabel());
                     vertex = vertex.getPreviousVertex();
                 }
     
-                System.out.println("start = " + startVertex.getLabel());
                 finalStack.push(startVertex.getLabel());
                 distanceStack.push(startVertex.getDistance());
                 overallPath.insertFirst(vertex.getLabel());

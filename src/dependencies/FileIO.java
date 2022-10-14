@@ -143,11 +143,12 @@ public class FileIO
      * 
      * @IOException: Could not read file.
      */
-    public static void readFile(String fileName) throws IOException
+    public static void readFile(String fileName, DSAQueue<String> lines) throws IOException
     {
         FileInputStream fileStream = null;
         InputStreamReader rdr;
-        BufferedReader buffRdr;
+        BufferedReader bufRdr;
+
         int lineNum;
         String line;
         char[] arr;
@@ -156,15 +157,15 @@ public class FileIO
         {
             fileStream = new FileInputStream(fileName);
             rdr = new InputStreamReader(fileStream);
-            buffRdr = new BufferedReader(rdr);
-        
+            bufRdr = new BufferedReader(rdr);
+
             lineNum = 0;
-            line = buffRdr.readLine();
+            line = bufRdr.readLine();
             while(line != null)
             {
                 lineNum++;
-                arr = stringToCharArray(line);
-                line = buffRdr.readLine();
+                lines.enqueue(line);
+                line = bufRdr.readLine();
             }
 
             fileStream.close();
@@ -194,25 +195,6 @@ public class FileIO
             System.out.println(e3.getMessage());
         }
     }
-
-    /*
-     * Converts a string into a character array.
-     * 
-     * @param: string.
-     * 
-     * @return: char[].
-     */
-    private static char[] stringToCharArray(String string)
-    {
-        char[] arr = string.toCharArray();
-
-        // for(int i = 0; i < string.length(); i++)
-        // {
-        //     System.out.println(arr[i]);
-        // }
-
-        return arr;
-    }  
 
     /*
      * Loads a graph from a serialized file.
@@ -271,6 +253,10 @@ public class FileIO
      * @param endVertex: label of the ending vertex.
      * @param overallPath: Linkedlist of all vertices in the path.
      * @param cost: cost of the path.
+     * 
+     * @return void.
+     * 
+     * @FileNotFoundException: Could not find file.
      */
     public static void writeCSV(String filename, String startVertex, String endVertex, DSALinkedList<String> overallPath, double cost) throws FileNotFoundException
     {
