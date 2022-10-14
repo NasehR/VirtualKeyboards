@@ -1,4 +1,4 @@
-# Meteorite Landing Data
+# Shortest Path on Virtual Keyboards
 
 ## Overview
 This project was created to explore the shortest path between characters the a string.
@@ -9,22 +9,22 @@ To browse the code please visit the following link: [keyMeUp.java]()
     * Make sure you have java installed on your machine by calling 'javac --version' in your terminal.
 
 * **How to run:**
-    * In your terminal 'cd' to the main folder 'src'.
+    * In your terminal `cd` to the main folder `src`.
 
     
     * Compile the main class file by typing the following command in your terminal:
         ```
-        'make'.
+        make
         ```
 
     * To run the program in interactive mode, type the following command in your terminal:
         ```
-        'java keyMeUp -i'.
+        java keyMeUp -i
         ```
 
     * To run the program in silent mode, type the following command in your terminal:
         ```
-        'java keyMeUp -s [File 1] [File 2] [File 3]'.
+        java keyMeUp -s [File 1] [File 2] [File 3]
         ```
         where :
             [File 1] is the keyboards layout file.
@@ -34,19 +34,19 @@ To browse the code please visit the following link: [keyMeUp.java]()
     * Run test cases:
         * To run test case for DSALinkedList, type the following command in your terminal:
             ```
-            'make linkedlist && java UnitTestLinkedList && java UnitTestLinkedListIterator' 
+            make linkedlist && java UnitTestLinkedList && java UnitTestLinkedListIterator
             ```
         * To run test case for DSAStack, type the following command in your terminal:
             ```
-            'make stack && java UnitTestStack' 
+            make stack && java UnitTestStack
             ```
         * To run test case for DSAQueue, type the following command in your terminal: 
             ```
-            'make queue && java UnitTestQueue' 
+            make queue && java UnitTestQueue
             ```
         * To run test case for DSAGraph, type the following command in your terminal: 
             ```
-            'make graph && java UnitTestGraph'
+            make graph && java UnitTestGraph
             ```
 
 ## Features
