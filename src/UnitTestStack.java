@@ -1,3 +1,13 @@
+/*
+ * Filename: UnitTestStack.java
+ * Purpose: 
+ *
+ * @author   : Naseh Rizvi
+ * StudentNo : 20167671
+ * Unit      : DSA
+ * Date      : 04/10/22
+ * Practical : 06
+ */
 
 import java.util.*;
 

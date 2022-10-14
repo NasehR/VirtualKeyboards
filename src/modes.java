@@ -1,3 +1,13 @@
+/*
+ * Filename: modes.java
+ * Purpose: Different menu option depending on user input at runtime
+ *
+ * @author   : Naseh Rizvi
+ * StudentNo : 20167671
+ * Unit      : DSA
+ * Date      : 13/10/22
+ */
+
 import java.io.*;
 import java.util.*;
 
