@@ -1,9 +1,15 @@
 import java.io.*;
 import java.util.*;
-import dependencies.*;
 
 public class modes 
 {
+    /*
+     * A menu for the user to interact with the modes.
+     * 
+     * @param: void
+     * 
+     * @return: void
+     */
     public static void interactiveMenu()
     {
         DSAGraph graph = new DSAGraph();
@@ -298,6 +304,15 @@ public class modes
         }while(input != 0);
     }
 
+    /*
+     * A menu for the user to find paths on the keyboard of choice and save it.
+     * 
+     * @param keyFile: The name of the file containing the keyboard.
+     * @param strFile: The name of the file containing the string.
+     * @param pathFile: The name of the file in which the path will be saved.
+     * 
+     * @return: void
+     */
     public static void silentMenu(String keyFile, String strFile, String pathFile)
     {
         try 
@@ -389,6 +404,13 @@ public class modes
         }
     }
 
+    /*
+     * Displays the menu to the user.
+     * 
+     * @param: void
+     * 
+     * @return: void
+     */
     private static void interactiveMode()
     {
         System.out.println("Interactive mode");
@@ -407,6 +429,13 @@ public class modes
                             );
     }
 
+    /*
+     * Displays the different ways to read the file to the user.
+     * 
+     * @param: void
+     * 
+     * @return: void
+     */
     private static void optionFile()
     {
         System.out.println(
@@ -416,6 +445,13 @@ public class modes
                             );
     }
 
+    /*
+     * Displays the different operations to perform on nodes.
+     * 
+     * @param: void
+     * 
+     * @return: void
+     */
     private static void nodeOperation()
     {
         System.out.println(
@@ -427,6 +463,13 @@ public class modes
                             );
     }
 
+    /*
+     * Displays the different operations to perform on edges.
+     * 
+     * @param: void
+     * 
+     * @return: void
+     */
     private static void edgeOperation()
     {
         System.out.println(
