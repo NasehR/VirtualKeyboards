@@ -11,7 +11,7 @@
 import java.io.*;
 import java.util.*;
 
-public class modes 
+public class Modes 
 {
     /*
      * A menu for the user to interact with the modes.
@@ -432,7 +432,7 @@ public class modes
                             "(4) Display graph\n\t" +
                             "(5) Display graph information\n\t" +
                             "(6) Enter string for finding path\n\t" +
-                            "(7) Generate paths\n\t" +
+                            "(7) Generate path\n\t" +
                             "(8) Display path\n\t" +
                             "(9) Save keyboard\n\t" +
                             "(0) Exit\n"

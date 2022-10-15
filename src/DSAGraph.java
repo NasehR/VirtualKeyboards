@@ -109,9 +109,9 @@ public class DSAGraph<T> implements Serializable
         }
 
         // Mutator removeAdjacent:
-        public void removeAdjacent(DSAGraphVertex vertexLabel)
+        public void removeAdjacent(DSAGraphVertex vertex)
         {
-            links.removeMiddle(vertexLabel);
+            links.removeMiddle(vertex);
         }
 
         // Accessor compareTo:
@@ -414,7 +414,6 @@ public class DSAGraph<T> implements Serializable
      * 
      * @return boolean: True if is the graph has the vertex.
      */
-    
     public boolean hasVertex(T label)
     {
         boolean condition = false;

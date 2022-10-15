@@ -37,14 +37,14 @@ z y 1 t 6
 space clear backspace 5 symbols 
 backspace space clear 7 symbols
 clear backspace space 9 caps
-symbols caps space a
+symbols caps space a A
 caps symbols backspace d D SYMBOLS
 A F B SYMBOLS G
 B A C SYMBOLS H
 C B D SYMBOLS I
-D C E CAPS J
-E D F CAPS K
-F E A CAPS L
+D C E caps J
+E D F caps K
+F E A caps L
 G L H A M
 H G I B N
 I H J C O
@@ -65,4 +65,37 @@ W V X Q
 X W S R
 Y Z S
 Z Y T
-SYMBOLS caps SPCACE A
+SYMBOLS caps SPACE A - Space
+- ) / SYMBOLS ? symbols
+/ - : SYMBOLS ! symbols
+: / ; SYMBOLS [ symbols
+; : ( caps ]
+( ; ) caps {
+) ( - caps }
+? } ! - ` 
+! ? [ / # 
+[ ! ] : % 
+] [ { ; ^ 
+{ ] } ( * 
+} { ? ) + 
+` + # ? = 
+# ` % ! _ 
+% # ^ [ \ 
+^ % * ] | 
+* ^ + { < 
++ * ` } > 
+= _ > ` @ 
+_ = \ # & 
+\ _ | % . 
+| \ < ^ , 
+< | > * ' 
+> < = + " 
+@ & " = Space
+& @ . _ Space
+. & , \ BackSpace
+, . ' | BackSpace
+' , " < Clear
+" ' @ > Clear
+Space Clear BackSpace @ SYMBOLS symbols
+BackSpace Space Clear . SYMBOLS symbols
+Clear BackSpace Space / caps

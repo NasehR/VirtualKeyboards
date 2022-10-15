@@ -59,7 +59,7 @@ public class FileIO
      * 
      * @return: void.
      */
-    private static void lineToGraph(String line, DSAGraph<String>graph) 
+    private static void lineToGraph(String line, DSAGraph<String> graph) 
     {
         String[] lineElements = line.split(" ");
             
@@ -96,7 +96,7 @@ public class FileIO
      * 
      * @IOException: Could not write file.
      */
-    public static void graphToFile(String fileName, DSAGraph<String>graph) throws IOException
+    public static void graphToFile(String fileName, DSAGraph<String> graph) throws IOException
     {
         FileOutputStream fileStream = null;
         ObjectOutputStream objStream = null;
@@ -202,7 +202,7 @@ public class FileIO
      * @IOException: Incorrect input.
      */
     @SuppressWarnings("unchecked")
-    public static DSAGraph<String>load(String fileName) throws IOException
+    public static DSAGraph<String> load(String fileName) throws IOException
     {
         FileInputStream fileStream = null;
         ObjectInputStream objStream = null;

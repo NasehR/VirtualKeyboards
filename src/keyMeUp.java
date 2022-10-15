@@ -17,7 +17,7 @@ public class keyMeUp
             if(args[0].equals("-i"))
             {
                 System.out.println("\033[H\033[2J");
-                modes.interactiveMenu();
+                Modes.interactiveMenu();
             }
 
             else
@@ -31,7 +31,7 @@ public class keyMeUp
             if(args[0].equals("-s"))
             {
                 System.out.println("\033[H\033[2J");
-                modes.silentMenu(args[1], args[2], args[3]);
+                Modes.silentMenu(args[1], args[2], args[3]);
             }
 
             else
